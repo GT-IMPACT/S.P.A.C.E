@@ -5,6 +5,10 @@ import java.io.File
 
 object Config {
 
+    private const val CATEGORY_WORLD_ENV = "WORLD"
+
+
+
     private inline fun onPostCreate(configFile: File?, crossinline action: (Configuration) -> Unit) {
         Configuration(configFile).let { config ->
             config.load()
@@ -19,6 +23,13 @@ object Config {
         val config = File(File(configFile, "IMPACT"), "SPACE.cfg")
         onPostCreate(config) { cfg ->
 
+            //WORLD
+            isEnabledForceRespawn = cfg[CATEGORY_WORLD_ENV, "isEnabledForceRespawn", false].boolean
+
+            //OTHER
+
         }
     }
+
+    var isEnabledForceRespawn: Boolean = false
 }
