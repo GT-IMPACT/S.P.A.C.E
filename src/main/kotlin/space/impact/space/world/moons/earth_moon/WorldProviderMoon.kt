@@ -5,8 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly
 import net.minecraft.util.MathHelper
 import net.minecraft.world.biome.WorldChunkManager
 import net.minecraft.world.chunk.IChunkProvider
-import space.impact.space.api.world.ChunkProviderBase
-import space.impact.space.api.world.SpaceWorldProviderBase
+import space.impact.space.api.world.gen.world.SpaceWorldProviderBase
 import space.impact.space.api.world.bodies.CelestialBody
 import space.impact.space.api.world.space.Galaxies
 import space.impact.space.api.world.world_math.Vector3

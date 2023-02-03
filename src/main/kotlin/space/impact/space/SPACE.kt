@@ -23,6 +23,7 @@ object SPACE {
 
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
+
         proxy.preInit(event)
     }
 

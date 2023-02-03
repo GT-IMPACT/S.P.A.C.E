@@ -5,8 +5,9 @@ import java.io.File
 
 object Config {
 
-    private const val CATEGORY_WORLD_ENV = "WORLD"
+    public const val OVERFLOW_CYCLE_MAX = 9_999_999
 
+    private const val CATEGORY_WORLD_ENV = "WORLD"
 
 
     private inline fun onPostCreate(configFile: File?, crossinline action: (Configuration) -> Unit) {

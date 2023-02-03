@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraftforge.common.DimensionManager
 import net.minecraftforge.common.MinecraftForge
-import space.impact.space.events.TeleportEvent
+import space.impact.space.api.events.TeleportEvent
 
 
 class DTPCommand : CommandBase() {
