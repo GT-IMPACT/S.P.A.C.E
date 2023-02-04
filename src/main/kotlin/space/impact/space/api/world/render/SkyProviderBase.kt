@@ -452,7 +452,7 @@ abstract class SkyProviderBase : IRenderHandler() {
         return var3 * var3 * 1.0f
     }
 
-    protected abstract fun rendererSky(var1: Tessellator, var2: Float, var3: Float)
+    protected abstract fun rendererSky(tess: Tessellator, f10: Float, partialTicks: Float)
     protected abstract fun modeLight(): Int
     protected abstract fun enableBaseImages(): Boolean
     protected abstract fun sunSize(): Float
@@ -470,7 +470,7 @@ abstract class SkyProviderBase : IRenderHandler() {
     }
 
     fun enableRenderPlanet(): Boolean {
-        return false
+        return true
     }
 
     fun addSizeAura(): Int {

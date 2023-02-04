@@ -1,4 +1,4 @@
-package space.impact.space.addons.solar_system.jupiter.moons.europa.world
+package space.impact.space.addons.solar_system.earth.moons.moon.world
 
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
@@ -8,12 +8,11 @@ import net.minecraft.world.chunk.IChunkProvider
 import net.minecraftforge.client.IRenderHandler
 import space.impact.space.api.world.bodies.CelestialBody
 import space.impact.space.api.world.gen.world.SpaceWorldProviderBase
-import space.impact.space.api.world.render.CloudRenderer
-import space.impact.space.api.world.space.Galaxies.EUROPE_MOON
+import space.impact.space.api.world.space.Galaxies
 import space.impact.space.api.world.world_math.Vector3
 import space.impact.space.utils.ext.toVector
 
-class WorldProviderEuropa : SpaceWorldProviderBase() {
+class WorldProviderMoon : SpaceWorldProviderBase() {
 
     override fun canRainOrSnow(): Boolean {
         return false
@@ -32,43 +31,51 @@ class WorldProviderEuropa : SpaceWorldProviderBase() {
     }
 
     override fun getDayLength(): Long {
-        return 58000L
+        return 192000L
     }
 
     override fun getChunkProviderClass(): Class<out IChunkProvider> {
-        return ChunkProviderEuropa::class.java
+        return ChunkProviderMoon::class.java
     }
 
     override fun getWorldChunkManagerClass(): Class<out WorldChunkManager> {
-        return WorldChunkManagerEuropa::class.java
+        return WorldChunkManagerMoon::class.java
     }
 
     override fun getGravitationMultiply(): Float {
-        return 0.057f
+        return 0.062f
     }
 
     override fun getSoundVolReductionAmount(): Float {
-        return 0f
+        return 20.0f
     }
 
     override fun getThermalLevelModifier(): Float {
-        return -3.0f
+        return 0f
     }
 
     override fun getWindLevel(): Float {
         return 0f
     }
 
-    override fun getHorizon(): Double {
-        return 44.0
+    override fun getCelestialBody(): CelestialBody {
+        return Galaxies.EARTH_MOON
     }
 
     override fun hasBreathableAtmosphere(): Boolean {
         return false
     }
 
-    override fun getCelestialBody(): CelestialBody {
-        return EUROPE_MOON
+    override fun isSkyColored(): Boolean {
+        return false
+    }
+
+    override fun getHorizon(): Double {
+        return 44.0
+    }
+
+    override fun getAverageGroundLevel(): Int {
+        return 68
     }
 
     @SideOnly(Side.CLIENT)
@@ -87,7 +94,7 @@ class WorldProviderEuropa : SpaceWorldProviderBase() {
     @SideOnly(Side.CLIENT)
     override fun getSkyRenderer(): IRenderHandler {
         if (super.getSkyRenderer() == null) {
-            skyRenderer = SkyProviderEuropa()
+            skyRenderer = SkyProviderMoon()
         }
         return super.getSkyRenderer()
     }

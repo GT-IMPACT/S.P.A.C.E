@@ -16,7 +16,7 @@ class SpaceBiomeGenBase(id: Int) : BiomeGenBase(id) {
         theBiomeDecorator.grassPerChunk = -999
     }
 
-    override fun getSpawningChance() = 0.1f
+    override fun getSpawningChance() = 0.7f
 }
 
 object SpaceBiomes {

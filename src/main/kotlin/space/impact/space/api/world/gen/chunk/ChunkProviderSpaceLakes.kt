@@ -40,15 +40,10 @@ abstract class ChunkProviderSpaceLakes(
         const val LARGE_FEATURE_FILTER_MOD = 8.0
         const val SMALL_FEATURE_FILTER_MOD = 8.0
 
-        var genBlocks: ArrayList<GenBlocks> = ArrayList()
+        const val MAX_BLOCK_IN_CHUNK = 16 * 16 * 256
     }
 
-    private val TERRAIN_HEIGHT_MOD: Double = this.getHeightModifier()
-    private val SMALL_FEATURE_HEIGHT_MOD: Double = this.getSmallFeatureHeightModifier()
-    private val MOUNTAIN_HEIGHT_MOD: Double = this.getMountainHeightModifier()
-    private val VALLEY_HEIGHT_MOD: Double = this.getValleyHeightModifier()
-    private val CRATER_PROB: Int = this.getCraterProbability()
-    private val MID_HEIGHT: Int = this.getTerrainLevel()
+    var genBlocks: ArrayList<GenBlocks> = ArrayList()
 
     protected var rand: Random = Random(seed)
     private val myBiomeCache: BiomeCache? = null
@@ -99,8 +94,8 @@ abstract class ChunkProviderSpaceLakes(
 
     override fun provideChunk(x: Int, z: Int): Chunk? {
         rand.setSeed(x.toLong() * 341873128712L + z.toLong() * 132897987541L)
-        val blockStorage = arrayOfNulls<Block>(65536)
-        val metaStorage = ByteArray(65536)
+        val blockStorage = arrayOfNulls<Block?>(MAX_BLOCK_IN_CHUNK)
+        val metaStorage = ByteArray(MAX_BLOCK_IN_CHUNK)
         generateTerrain(x, z, blockStorage, metaStorage)
         if (getCraterProbability() > 0) {
             createCraters(x, z, blockStorage, metaStorage)
@@ -108,14 +103,14 @@ abstract class ChunkProviderSpaceLakes(
         biomesForGeneration = worldObj.worldChunkManager.loadBlockGeneratorData(biomesForGeneration, x * 16, z * 16, 16, 16)
 
         replaceBlocksForBiome(x, z, blockStorage, metaStorage, biomesForGeneration)
+
         if (worldGenerators == null) {
             worldGenerators = getWorldGenerators()
         }
-        val var5: Iterator<MapGenMetaBase> = worldGenerators!!.iterator()
-        while (var5.hasNext()) {
-            val generator = var5.next()
-            generator.generate(this, worldObj, x, z, blockStorage, metaStorage)
+        worldGenerators?.forEach {
+            it.generate(this, worldObj, x, z, blockStorage, metaStorage)
         }
+
         onChunkProvider(x, z, blockStorage, metaStorage)
         val chunk = Chunk(worldObj, blockStorage, metaStorage, x, z)
         val chunkBiomes = chunk.biomeArray
@@ -142,22 +137,22 @@ abstract class ChunkProviderSpaceLakes(
         for (x in 0..15) {
             for (z in 0..15) {
 
-                val baseHeight = noiseGen1.getNoise((chunkX * 16 + x).toFloat(), (chunkZ * 16 + z).toFloat()).toDouble() * TERRAIN_HEIGHT_MOD
-                val smallHillHeight = noiseGen2.getNoise((chunkX * 16 + x).toFloat(), (chunkZ * 16 + z).toFloat()).toDouble() * SMALL_FEATURE_HEIGHT_MOD
+                val baseHeight = noiseGen1.getNoise((chunkX * 16 + x).toFloat(), (chunkZ * 16 + z).toFloat()).toDouble() * getHeightModifier()
+                val smallHillHeight = noiseGen2.getNoise((chunkX * 16 + x).toFloat(), (chunkZ * 16 + z).toFloat()).toDouble() * getSmallFeatureHeightModifier()
                 var mountainHeight = abs(noiseGen3.getNoise((chunkX * 16 + x).toFloat(), (chunkZ * 16 + z).toFloat())).toDouble()
                 var valleyHeight = abs(noiseGen4.getNoise((chunkX * 16 + x).toFloat(), (chunkZ * 16 + z).toFloat())).toDouble()
                 val featureFilter = noiseGen5.getNoise((chunkX * 16 + x).toFloat(), (chunkZ * 16 + z).toFloat()).toDouble() * 4.0
                 val largeFilter = noiseGen6.getNoise((chunkX * 16 + x).toFloat(), (chunkZ * 16 + z).toFloat()).toDouble() * 8.0
                 val smallFilter = noiseGen7.getNoise((chunkX * 16 + x).toFloat(), (chunkZ * 16 + z).toFloat()).toDouble() * 8.0 - 0.5
 
-                mountainHeight = lerp(smallHillHeight, mountainHeight * MOUNTAIN_HEIGHT_MOD, fade(clamp(mountainHeight * 2.0, 0.0, 1.0)))
-                valleyHeight = lerp(smallHillHeight, valleyHeight * VALLEY_HEIGHT_MOD - VALLEY_HEIGHT_MOD + 9.0, fade(clamp((valleyHeight + 2.0) * 4.0, 0.0, 1.0)))
+                mountainHeight = lerp(smallHillHeight, mountainHeight * getMountainHeightModifier(), fade(clamp(mountainHeight * 2.0, 0.0, 1.0)))
+                valleyHeight = lerp(smallHillHeight, valleyHeight * getValleyHeightModifier() - getValleyHeightModifier() + 9.0, fade(clamp((valleyHeight + 2.0) * 4.0, 0.0, 1.0)))
                 var yDev = lerp(valleyHeight, mountainHeight, fade(largeFilter))
                 yDev = lerp(smallHillHeight, yDev, smallFilter)
                 yDev = lerp(baseHeight, yDev, featureFilter)
                 val biomes = worldObj.getBiomeGenForCoords(x + chunkX * 16, z + chunkZ * 16)
                 for (y in 0..255) {
-                    if (y.toDouble() < MID_HEIGHT.toDouble() + yDev) {
+                    if (y.toDouble() < getTerrainLevel().toDouble() + yDev) {
                         if (enableBiomeGenBaseBlock() && genBlocks.isNotEmpty()) {
                             var index = -1
                             val var26: Iterator<GenBlocks> = genBlocks.iterator()
@@ -304,9 +299,8 @@ abstract class ChunkProviderSpaceLakes(
                 var16 = 255
                 while (var16 >= 0) {
                     val index = getIndex(var8, var16, var9)
-                    if (canGenerateIceBlock() && (var16 == 1 || var16 == 1 + rand.nextInt(8))) {
-                        arrayOfIDs[index] = postBedrockBlock().block
-                        arrayOfMeta[index] = postBedrockBlock().meta
+                    if (canGeneratePostBedrock() && (var16 == 1 || var16 == 1 + rand.nextInt(8))) {
+                        setBlockState(arrayOfIDs, arrayOfMeta, index, postBedrockBlock())
                     }
                     if (var16 <= 0) {
                         arrayOfIDs[index] = Blocks.bedrock
@@ -319,8 +313,7 @@ abstract class ChunkProviderSpaceLakes(
                             if (var13 != -1) {
                                 if (var13 > 0) {
                                     --var13
-                                    arrayOfIDs[index] = var15
-                                    arrayOfMeta[index] = var15m
+                                    setBlockState(arrayOfIDs, arrayOfMeta, index, var15, var15m)
                                 }
                             } else {
                                 if (var12 <= 0) {
@@ -330,10 +323,13 @@ abstract class ChunkProviderSpaceLakes(
                                     var15m = mStone
                                 } else if (var16 in 21..36) {
                                     if (enableBiomeGenBaseBlock() && genBlocks.isNotEmpty()) {
-//                                        var14 = genBlocks[index].grass.block
-//                                        var14m = genBlocks[index].grass.meta
-                                        var14 = genBlocks[index].dirt.block
-                                        var14m = genBlocks[index].dirt.meta
+                                        try {
+                                            var14 = genBlocks[index].dirt.block
+                                            var14m = genBlocks[index].dirt.meta
+                                        } catch (e: Exception) {
+                                            var14 = getDirtBlock().block
+                                            var14m = getDirtBlock().meta
+                                        }
                                     } else {
 //                                        var14 = getGrassBlock().block
 //                                        var14m = getGrassBlock().meta
@@ -342,12 +338,10 @@ abstract class ChunkProviderSpaceLakes(
                                     }
                                 }
                                 var13 = var12
-                                arrayOfIDs[index] = var14
-                                arrayOfMeta[index] = var14m
+                                setBlockState(arrayOfIDs, arrayOfMeta, index, BlockMetaPair(var14, var14m))
                             }
                         } else if (var16 < getWaterLevel() && canGenerateWaterBlock()) {
-                            arrayOfIDs[index] = getWaterBlock().block
-                            arrayOfMeta[index] = getWaterBlock().meta
+                            setBlockState(arrayOfIDs, arrayOfMeta, index, getWaterBlock())
                         }
                     }
                     --var16
@@ -358,19 +352,31 @@ abstract class ChunkProviderSpaceLakes(
         }
     }
 
+    private fun setBlockState(blocks: Array<Block?>, metas: ByteArray, index: Int, block: Block?, meta: Byte) {
+        blocks[index] = block
+        metas[index] = meta
+    }
+
+    private fun setBlockState(blocks: Array<Block?>, metas: ByteArray, index: Int, block: BlockMetaPair) {
+        blocks[index] = block.block
+        metas[index] = block.meta
+    }
+
     open fun createCraters(chunkX: Int, chunkZ: Int, chunkArray: Array<Block?>, metaArray: ByteArray) {
         noiseGen5.setFrequency(0.015f)
         for (cx in chunkX - 2..chunkX + 2) {
             for (cz in chunkZ - 2..chunkZ + 2) {
                 for (x in 0..15) {
                     for (z in 0..15) {
-                        if (abs(randFromPoint(cx * 16 + x, (cz * 16 + z) * 1000)) < (noiseGen5.getNoise((cx * 16 + x).toFloat(), (cz * 16 + z).toFloat()) / CRATER_PROB.toFloat()).toDouble()) {
+
+                        val d1 = abs(randFromPoint(cx * 16 + x, (cz * 16 + z) * 1000))
+                        val d2 = noiseGen5.getNoise((cx * 16 + x).toFloat(), (cz * 16 + z).toFloat()) / this.getCraterProbability().toFloat()
+
+                        if (d1 < d2) {
                             val random = Random((cx * 16 + x + (cz * 16 + z) * 5000).toLong())
-                            val cSize = EnumCraterSize.sizeArray.random()
-                            if (cSize != null) {
-                                val size: Int = random.nextInt(cSize.max - cSize.min) + cSize.min + 15
-                                makeCrater(cx * 16 + x, cz * 16 + z, chunkX * 16, chunkZ * 16, size, chunkArray, metaArray)
-                            }
+                            val cSize = EnumCraterSize.values().random()
+                            val size: Int = random.nextInt(cSize.max - cSize.min) + cSize.min + 15
+                            makeCrater(cx * 16 + x, cz * 16 + z, chunkX * 16, chunkZ * 16, size, chunkArray, metaArray)
                         }
                     }
                 }
@@ -391,8 +397,8 @@ abstract class ChunkProviderSpaceLakes(
                     yDev = 5.0 - yDev
                     var helper = 0
                     var y = 127
-                    while (y > 0 && helper.toDouble() <= yDev) {
-                        if (chunkArray[getIndex(x, y, z)] != null) {
+                    while (y > 0) {
+                        if (chunkArray[getIndex(x, y, z)] != Blocks.air && helper.toDouble() <= yDev) {
                             getCraterAdditions(chunkArray, metaArray, x, y, z)
                             chunkArray[getIndex(x, y, z)] = Blocks.air
                             metaArray[getIndex(x, y, z)] = 0
@@ -498,15 +504,13 @@ abstract class ChunkProviderSpaceLakes(
         }
     }
 
-
-
     protected abstract fun getBiomeGenerator(): BiomeDecoratorSpaceBase?
 
     protected abstract fun getBiomesForGeneration(): Array<BiomeGenBase>
 
-    abstract fun onChunkProvider(var1: Int, var2: Int, var3: Array<Block?>?, var4: ByteArray?)
+    abstract fun onChunkProvider(cX: Int, cZ: Int, blocks: Array<Block?>, metadata: ByteArray)
 
-    abstract fun onPopulate(var1: IChunkProvider?, var2: Int, var3: Int)
+    abstract fun onPopulate(provider: IChunkProvider?, chX: Int, chZ: Int)
 
     protected abstract fun getMonsters(): Array<SpawnListEntry?>?
 
@@ -528,7 +532,7 @@ abstract class ChunkProviderSpaceLakes(
 
     abstract fun canGenerateWaterBlock(): Boolean
 
-    abstract fun canGenerateIceBlock(): Boolean
+    abstract fun canGeneratePostBedrock(): Boolean
 
     abstract fun getCraterProbability(): Int
 

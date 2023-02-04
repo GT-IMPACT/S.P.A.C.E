@@ -24,12 +24,12 @@ class SkyProviderEuropa : SkyProviderBase() {
     var test = false
     var wait = 5
 
-    override fun rendererSky(tessellator: Tessellator, f10: Float, partialTicks: Float) {
-        var f10 = f10
+    override fun rendererSky(tess: Tessellator, f10: Float, partialTicks: Float) {
+        var sizePlanet = f10
         val daylength: Long = (mc.theWorld.provider as SpaceWorldProviderBase).getDayLength()
         GL11.glPopMatrix()
         GL11.glPushMatrix()
-        f10 = 5.5f
+        sizePlanet = 5.5f
         GL11.glScalef(0.6f, 0.6f, 0.6f)
         GL11.glRotatef(0.0f, 0.0f, 0.0f, 1.0f)
         GL11.glRotatef(getCelestialAngle(daylength / 2L), 0.0f, 1.0f, 0.0f)
@@ -43,12 +43,12 @@ class SkyProviderEuropa : SkyProviderBase() {
         }
 
         FMLClientHandler.instance().client.renderEngine.bindTexture(ganymedeTexture)
-        tessellator.startDrawingQuads()
-        tessellator.addVertexWithUV((-f10).toDouble(), -100.0, f10.toDouble(), 0.0, 1.0)
-        tessellator.addVertexWithUV(f10.toDouble(), -100.0, f10.toDouble(), 1.0, 1.0)
-        tessellator.addVertexWithUV(f10.toDouble(), -100.0, (-f10).toDouble(), 1.0, 0.0)
-        tessellator.addVertexWithUV((-f10).toDouble(), -100.0, (-f10).toDouble(), 0.0, 0.0)
-        tessellator.draw()
+        tess.startDrawingQuads()
+        tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, sizePlanet.toDouble(), 0.0, 1.0)
+        tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, sizePlanet.toDouble(), 1.0, 1.0)
+        tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, (-sizePlanet).toDouble(), 1.0, 0.0)
+        tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
+        tess.draw()
 
         if (Config.isEnabledSupportCircleTexturePlanet) {
             GL11.glPopAttrib()
@@ -56,7 +56,7 @@ class SkyProviderEuropa : SkyProviderBase() {
 
         GL11.glPopMatrix()
         GL11.glPushMatrix()
-        f10 = 3.5f
+        sizePlanet = 3.5f
         GL11.glScalef(0.6f, 0.6f, 0.6f)
         GL11.glRotatef(0.0f, 0.0f, 0.0f, 1.0f)
         GL11.glRotatef(getCelestialAngle(daylength * 2L), 0.0f, 1.0f, 0.0f)
@@ -70,12 +70,12 @@ class SkyProviderEuropa : SkyProviderBase() {
         }
 
         FMLClientHandler.instance().client.renderEngine.bindTexture(callistoTexture)
-        tessellator.startDrawingQuads()
-        tessellator.addVertexWithUV((-f10).toDouble(), -100.0, f10.toDouble(), 0.0, 1.0)
-        tessellator.addVertexWithUV(f10.toDouble(), -100.0, f10.toDouble(), 1.0, 1.0)
-        tessellator.addVertexWithUV(f10.toDouble(), -100.0, (-f10).toDouble(), 1.0, 0.0)
-        tessellator.addVertexWithUV((-f10).toDouble(), -100.0, (-f10).toDouble(), 0.0, 0.0)
-        tessellator.draw()
+        tess.startDrawingQuads()
+        tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, sizePlanet.toDouble(), 0.0, 1.0)
+        tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, sizePlanet.toDouble(), 1.0, 1.0)
+        tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, (-sizePlanet).toDouble(), 1.0, 0.0)
+        tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
+        tess.draw()
 
         if (Config.isEnabledSupportCircleTexturePlanet) {
             GL11.glPopAttrib()
@@ -93,7 +93,7 @@ class SkyProviderEuropa : SkyProviderBase() {
         var f: Float
         if (!this.test) {
             GL11.glPushMatrix()
-            f10 = 100.0f
+            sizePlanet = 100.0f
             GL11.glScalef(.6f, .6f, .6f)
             GL11.glRotatef(0.0f, 0.0f, 1.0f, 0.0f)
             GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f)
@@ -106,26 +106,26 @@ class SkyProviderEuropa : SkyProviderBase() {
             }
 
             FMLClientHandler.instance().client.renderEngine.bindTexture(jupiterTexture)
-            tessellator.startDrawingQuads()
-            tessellator.addVertexWithUV((-f10).toDouble(), -100.0, f10.toDouble(), 0.0, 1.0)
-            tessellator.addVertexWithUV(f10.toDouble(), -100.0, f10.toDouble(), 1.0, 1.0)
-            tessellator.addVertexWithUV(f10.toDouble(), -100.0, (-f10).toDouble(), 1.0, 0.0)
-            tessellator.addVertexWithUV((-f10).toDouble(), -100.0, (-f10).toDouble(), 0.0, 0.0)
-            tessellator.draw()
+            tess.startDrawingQuads()
+            tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, sizePlanet.toDouble(), 0.0, 1.0)
+            tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, sizePlanet.toDouble(), 1.0, 1.0)
+            tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, (-sizePlanet).toDouble(), 1.0, 0.0)
+            tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
+            tess.draw()
 
             if (Config.isEnabledSupportCircleTexturePlanet) {
                 GL11.glPopAttrib()
             }
 
             f = 0.9f
-            renderAtmo(tessellator, 0.0f, 0.0f, f10 - 8.0f, Vector3((0.47058824f * f).toDouble(), (0.43137255f * f).toDouble(), (0.47058824f * f).toDouble()))
+            renderAtmo(tess, 0.0f, 0.0f, sizePlanet - 8.0f, Vector3((0.47058824f * f).toDouble(), (0.43137255f * f).toDouble(), (0.47058824f * f).toDouble()))
 
             GL11.glEnable(GL_TEXTURE_2D)
 
             GL11.glPopMatrix()
         }
         GL11.glPushMatrix()
-        f10 = 8.0f
+        sizePlanet = 8.0f
         GL11.glRotatef(x, 0.0f, 1.0f, 0.0f)
         GL11.glRotatef(100.0f, 1.0f, 0.0f, 0.0f)
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
@@ -137,12 +137,12 @@ class SkyProviderEuropa : SkyProviderBase() {
         }
 
         FMLClientHandler.instance().client.renderEngine.bindTexture(ioTexture)
-        tessellator.startDrawingQuads()
-        tessellator.addVertexWithUV((-f10).toDouble(), -100.0, f10.toDouble(), 0.0, 1.0)
-        tessellator.addVertexWithUV(f10.toDouble(), -100.0, f10.toDouble(), 1.0, 1.0)
-        tessellator.addVertexWithUV(f10.toDouble(), -100.0, (-f10).toDouble(), 1.0, 0.0)
-        tessellator.addVertexWithUV((-f10).toDouble(), -100.0, (-f10).toDouble(), 0.0, 0.0)
-        tessellator.draw()
+        tess.startDrawingQuads()
+        tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, sizePlanet.toDouble(), 0.0, 1.0)
+        tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, sizePlanet.toDouble(), 1.0, 1.0)
+        tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, (-sizePlanet).toDouble(), 1.0, 0.0)
+        tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
+        tess.draw()
 
         if (Config.isEnabledSupportCircleTexturePlanet) {
             GL11.glPopAttrib()
@@ -152,7 +152,7 @@ class SkyProviderEuropa : SkyProviderBase() {
 
         if (this.test) {
             GL11.glPushMatrix()
-            f10 = 100.0f
+            sizePlanet = 100.0f
             GL11.glScalef(0.6f, 0.6f, 0.6f)
             GL11.glRotatef(0.0f, 0.0f, 1.0f, 0.0f)
             GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f)
@@ -165,19 +165,19 @@ class SkyProviderEuropa : SkyProviderBase() {
             }
 
             FMLClientHandler.instance().client.renderEngine.bindTexture(jupiterTexture)
-            tessellator.startDrawingQuads()
-            tessellator.addVertexWithUV((-f10).toDouble(), -100.0, f10.toDouble(), 0.0, 1.0)
-            tessellator.addVertexWithUV(f10.toDouble(), -100.0, f10.toDouble(), 1.0, 1.0)
-            tessellator.addVertexWithUV(f10.toDouble(), -100.0, (-f10).toDouble(), 1.0, 0.0)
-            tessellator.addVertexWithUV((-f10).toDouble(), -100.0, (-f10).toDouble(), 0.0, 0.0)
-            tessellator.draw()
+            tess.startDrawingQuads()
+            tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, sizePlanet.toDouble(), 0.0, 1.0)
+            tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, sizePlanet.toDouble(), 1.0, 1.0)
+            tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, (-sizePlanet).toDouble(), 1.0, 0.0)
+            tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
+            tess.draw()
 
             if (Config.isEnabledSupportCircleTexturePlanet) {
                 GL11.glPopAttrib()
             }
 
             f = 0.9f
-            renderAtmo(tessellator, 0.0f, 0.0f, f10 - 8.0f, Vector3((0.47058824f * f).toDouble(), (0.43137255f * f).toDouble(), (0.47058824f * f).toDouble()))
+            renderAtmo(tess, 0.0f, 0.0f, sizePlanet - 8.0f, Vector3((0.47058824f * f).toDouble(), (0.43137255f * f).toDouble(), (0.47058824f * f).toDouble()))
 
 
             GL11.glEnable(GL_TEXTURE_2D)

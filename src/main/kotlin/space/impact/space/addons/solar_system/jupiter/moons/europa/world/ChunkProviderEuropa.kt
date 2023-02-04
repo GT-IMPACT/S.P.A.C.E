@@ -13,8 +13,6 @@ import space.impact.space.api.world.gen.chunk.ChunkProviderSpaceLakes
 import space.impact.space.api.world.gen.other.BlockMetaPair
 import space.impact.space.api.world.gen.other.GenBlocks
 import space.impact.space.api.world.gen.world.MapGenMetaBase
-import space.impact.space.api.world.world_math.perlin.Gradient
-import space.impact.space.api.world.world_math.perlin.NoiseModule
 
 class ChunkProviderEuropa(world: World, seed: Long, flag: Boolean) : ChunkProviderSpaceLakes(world, seed, flag) {
 
@@ -45,7 +43,7 @@ class ChunkProviderEuropa(world: World, seed: Long, flag: Boolean) : ChunkProvid
     }
 
     override fun getCraterProbability(): Int {
-        return 30
+        return 80
     }
 
     override fun getCreatures(): Array<SpawnListEntry?> {
@@ -72,11 +70,11 @@ class ChunkProviderEuropa(world: World, seed: Long, flag: Boolean) : ChunkProvid
         return 5.0
     }
 
-    override fun onChunkProvider(cX: Int, cZ: Int, blocks: Array<Block?>?, metadata: ByteArray?) {}
+    override fun onChunkProvider(cX: Int, cZ: Int, blocks: Array<Block?>, metadata: ByteArray) {}
 
-    override fun onPopulate(arg0: IChunkProvider?, arg1: Int, arg2: Int) {
-        val k = arg1 * 16
-        val l = arg2 * 16
+    override fun onPopulate(provider: IChunkProvider?, chX: Int, chZ: Int) {
+        val k = chX * 16
+        val l = chZ * 16
         for (k1 in 0..15) {
             for (l1 in 0..15) {
                 val i2 = worldObj.getTopSolidOrLiquidBlock(k + k1, l + l1)
@@ -124,7 +122,7 @@ class ChunkProviderEuropa(world: World, seed: Long, flag: Boolean) : ChunkProvid
         return false
     }
 
-    override fun canGenerateIceBlock(): Boolean {
+    override fun canGeneratePostBedrock(): Boolean {
         return true
     }
 

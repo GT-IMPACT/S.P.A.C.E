@@ -16,11 +16,7 @@ open class CommonProxy {
     }
 
     open fun init(event: FMLInitializationEvent) {
-
         SolarSystem.register()
-
-        DimensionManager.registerProviderType(2, WorldProviderEuropa::class.java, true)
-        DimensionManager.registerDimension(2, 2)
     }
 
     open fun postInit(event: FMLPostInitializationEvent) {

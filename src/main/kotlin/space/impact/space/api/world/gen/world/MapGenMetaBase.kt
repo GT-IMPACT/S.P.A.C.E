@@ -11,7 +11,7 @@ abstract class MapGenMetaBase {
     protected var rand = Random()
     protected var world: World? = null
 
-    fun generate(chunk: IChunkProvider, w: World, chunkX: Int, chunkZ: Int, blocks: Array<Block?>, metadata: ByteArray) {
+    open fun generate(chunk: IChunkProvider, w: World, chunkX: Int, chunkZ: Int, blocks: Array<Block?>, metadata: ByteArray) {
         world = w
         rand.setSeed(w.seed)
 
