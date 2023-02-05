@@ -21,7 +21,7 @@ class SnowGen : CreateChunkGenXZ() {
     override fun gen(data: WorldGeneratorData) {
         for (y in 255 downTo snowPoint + data.chunkProvider.rand.nextInt(randomSnowPoint + 1)) {
             if (getBlock(data, y) != null) {
-                if (getBlock(data, y)!!.material === freezeMaterial) {
+                if (getBlock(data, y)!!.material == freezeMaterial) {
                     setBlock(data, iceBlock, iceBlockMeta, y)
                     if (genSnow && data.chunkProvider.rand.nextInt(snowOnWaterRandom + 1) == 0) {
                         setBlock(data, snowBlock, snowBlockMeta, y + 1)

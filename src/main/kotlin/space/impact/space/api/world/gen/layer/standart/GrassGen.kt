@@ -41,7 +41,7 @@ class GrassGen : IWorldGenerator {
                         while (world.getBlock(x, y - 1, z).material.isLiquid) {
                             --y
                         }
-                        if (world.getBlock(x, y - 1, z) === surface[i] && world.getBlockMetadata(x, y - 1, z) == surfaceMeta[i].toInt()) {
+                        if (world.getBlock(x, y - 1, z) == surface[i] && world.getBlockMetadata(x, y - 1, z) == surfaceMeta[i].toInt()) {
                             world.setBlock(x, y, z, flowerList[i], flowerMetaList[i].toInt(), 2)
                         }
                     }

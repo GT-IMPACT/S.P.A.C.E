@@ -4,6 +4,24 @@ import net.minecraft.world.biome.BiomeGenBase
 
 class SpaceBiomeGenBase(id: Int) : BiomeGenBase(id) {
 
+    companion object {
+        val SPACE: BiomeGenBase = SpaceBiomeGenBase(200)
+            .setBiomeName("S.P.A.C.E")
+            .setHeight(height_Default)
+
+        val SPACE_LOW_HILLS: BiomeGenBase = SpaceBiomeGenBase(201)
+            .setBiomeName("SpaceLowHills")
+            .setHeight(height_LowHills)
+
+        val SPACE_LOW_PLAINS: BiomeGenBase = SpaceBiomeGenBase(202)
+            .setBiomeName("SpaceLowHills")
+            .setHeight(height_LowPlains)
+
+        val SPACE_SHALLOW_WATERS: BiomeGenBase = SpaceBiomeGenBase(202)
+            .setBiomeName("SpaceShallowWaters")
+            .setHeight(height_ShallowWaters)
+    }
+
     init {
         spawnableMonsterList.clear()
         spawnableWaterCreatureList.clear()
@@ -16,13 +34,5 @@ class SpaceBiomeGenBase(id: Int) : BiomeGenBase(id) {
         theBiomeDecorator.grassPerChunk = -999
     }
 
-    override fun getSpawningChance() = 0.7f
-}
-
-object SpaceBiomes {
-
-    val SPACE = SpaceBiomeGenBase(228)
-        .setBiomeName("S.P.A.C.E")
-        .setHeight(BiomeGenBase.Height(0.1F, 0.2F))
-
+    override fun getSpawningChance() = 0.1f
 }

@@ -442,7 +442,7 @@ abstract class SkyProviderBase : IRenderHandler() {
 
     fun getSkyBrightness(par1: Float): Float {
         val var2 = FMLClientHandler.instance().client.theWorld.getCelestialAngle(par1)
-        var var3 = 1.0f - (MathHelper.sin(var2 * 3.1415927f * 2.0f) * 2.0f + 0.25f)
+        var var3 = 1.0f - (MathHelper.sin(var2 * Math.PI.toFloat() * 2.0f) * 2.0f + 0.25f)
         if (var3 < 0.0f) {
             var3 = 0.0f
         }

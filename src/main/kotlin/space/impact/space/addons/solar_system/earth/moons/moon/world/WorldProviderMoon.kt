@@ -8,6 +8,7 @@ import net.minecraft.world.chunk.IChunkProvider
 import net.minecraftforge.client.IRenderHandler
 import space.impact.space.api.world.bodies.CelestialBody
 import space.impact.space.api.world.gen.world.SpaceWorldProviderBase
+import space.impact.space.api.world.render.CloudRenderer
 import space.impact.space.api.world.space.Galaxies
 import space.impact.space.api.world.world_math.Vector3
 import space.impact.space.utils.ext.toVector
@@ -97,5 +98,10 @@ class WorldProviderMoon : SpaceWorldProviderBase() {
             skyRenderer = SkyProviderMoon()
         }
         return super.getSkyRenderer()
+    }
+
+    @SideOnly(Side.CLIENT)
+    override fun getCloudRenderer(): IRenderHandler {
+        return CloudRenderer()
     }
 }

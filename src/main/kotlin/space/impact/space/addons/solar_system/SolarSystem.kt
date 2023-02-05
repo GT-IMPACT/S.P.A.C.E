@@ -3,6 +3,7 @@ package space.impact.space.addons.solar_system
 import net.minecraftforge.common.DimensionManager
 import space.impact.space.addons.solar_system.earth.moons.moon.world.WorldProviderMoon
 import space.impact.space.addons.solar_system.jupiter.moons.europa.world.WorldProviderEuropa
+import space.impact.space.addons.solar_system.venus.world.WorldProviderVenus
 import space.impact.space.api.block.BasicBlock
 import space.impact.space.api.block.GeyserBlock
 import space.impact.space.api.core.SystemRegister
@@ -16,6 +17,9 @@ object SolarSystem : SystemRegister {
 
     val MOON_BLOCKS = BasicBlock(name, "moon_rocks", "moon", listOf("grunt", "stone", "deep_stone"))
 
+    val VENUS_BLOCKS = BasicBlock(name, "venus_rocks", "venus", listOf("grunt", "stone", "volcanic"))
+
+
     override fun register() {
 
         DimensionManager.registerProviderType(2, WorldProviderEuropa::class.java, true)
@@ -23,6 +27,9 @@ object SolarSystem : SystemRegister {
 
         DimensionManager.registerProviderType(3, WorldProviderMoon::class.java, true)
         DimensionManager.registerDimension(3, 3)
+
+        DimensionManager.registerProviderType(4, WorldProviderVenus::class.java, true)
+        DimensionManager.registerDimension(4, 4)
 
 
     }

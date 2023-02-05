@@ -8,7 +8,7 @@ import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry
 import net.minecraft.world.chunk.IChunkProvider
 import space.impact.space.addons.solar_system.SolarSystem
 import space.impact.space.api.world.gen.biome.BiomeDecoratorSpaceBase
-import space.impact.space.api.world.gen.biome.SpaceBiomes
+import space.impact.space.api.world.gen.biome.SpaceBiomeGenBase
 import space.impact.space.api.world.gen.chunk.ChunkProviderSpaceLakes
 import space.impact.space.api.world.gen.other.BlockMetaPair
 import space.impact.space.api.world.gen.other.GenBlocks
@@ -39,11 +39,11 @@ class ChunkProviderEuropa(world: World, seed: Long, flag: Boolean) : ChunkProvid
     }
 
     override fun getBiomesForGeneration(): Array<BiomeGenBase> {
-        return arrayOf(SpaceBiomes.SPACE.setBiomeName("Europa"))
+        return arrayOf(SpaceBiomeGenBase.SPACE.setBiomeName("Europa"))
     }
 
     override fun getCraterProbability(): Int {
-        return 80
+        return 0
     }
 
     override fun getCreatures(): Array<SpawnListEntry?> {
@@ -112,6 +112,10 @@ class ChunkProviderEuropa(world: World, seed: Long, flag: Boolean) : ChunkProvid
 
     override fun enableBiomeGenBaseBlock(): Boolean {
         return true
+    }
+
+    override fun getTypeGen(): Int {
+        return GEN_TYPE_LAND_DEFAULT
     }
 
     override fun getWaterLevel(): Int {

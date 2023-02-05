@@ -25,7 +25,7 @@ class WhiteNoise(genSeed: Long) {
     }
 
     fun vecGen2f(x: Int, z: Int): FloatArray? {
-        val angle = gen2f(x, z) * 3.1415927f
+        val angle = gen2f(x, z) * Math.PI.toFloat()
         return floatArrayOf(MathHelper.cos(angle), MathHelper.sin(angle))
     }
 

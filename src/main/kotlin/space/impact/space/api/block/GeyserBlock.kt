@@ -60,7 +60,7 @@ class GeyserBlock(system: String, blockName: String, textureFolder: String, bloc
         val effectData2 = EffectData.IceWaterEffect(50, 5, false, Vector3(1.0, 1.0, 1.0), 1.0)
         val effectData3 = EffectData.IceWaterEffect(160, 17, true, Vector3(1.0, 1.0, 1.0), 1.0)
         
-        if (!world.isAirBlock(x, y + 1, z) && world.getBlock(x, y + 1, z) !== Blocks.snow_layer) {
+        if (!world.isAirBlock(x, y + 1, z) && world.getBlock(x, y + 1, z) != Blocks.snow_layer) {
             if (world.getBlock(x, y + 1, z).material == Material.water) {
                 SPACE.proxy.spawnParticle(
                     Vector3(x.toDouble() + rand.nextDouble(), y.toDouble() + 1.0 + rand.nextDouble(), z.toDouble() + rand.nextDouble()),

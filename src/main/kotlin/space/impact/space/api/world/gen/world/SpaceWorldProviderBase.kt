@@ -188,7 +188,7 @@ abstract class SpaceWorldProviderBase : WorldProvider(), SpaceProvider {
             --angleF1
         }
         val angleF2 = angleF1
-        angleF1 = 0.5f - MathHelper.cos(angleF1 * 3.1415927f) / 2.0f
+        angleF1 = 0.5f - MathHelper.cos(angleF1 * Math.PI.toFloat()) / 2.0f
         return angleF2 + (angleF1 - angleF2) / 3.0f
     }
 
@@ -278,7 +278,7 @@ abstract class SpaceWorldProviderBase : WorldProvider(), SpaceProvider {
     }
 
     @SideOnly(Side.CLIENT)
-    override fun getCloudRenderer(): IRenderHandler {
-        return CloudRenderer()
+    override fun getCloudRenderer(): IRenderHandler? {
+        return null
     }
 }

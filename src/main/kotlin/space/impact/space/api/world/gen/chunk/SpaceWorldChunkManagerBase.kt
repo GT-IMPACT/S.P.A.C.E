@@ -37,17 +37,14 @@ abstract class SpaceWorldChunkManagerBase : WorldChunkManager() {
         return par1
     }
 
-    override fun getBiomesForGeneration(
-        par1ArrayOfBiomeGenBase: Array<BiomeGenBase?>?, par2: Int, par3: Int, par4: Int,
-        par5: Int
-    ): Array<BiomeGenBase?>? {
+    override fun getBiomesForGeneration(par1ArrayOfBiomeGenBase: Array<BiomeGenBase?>?, par2: Int, par3: Int, par4: Int, par5: Int): Array<BiomeGenBase?>? {
         var par1ArrayOfBiomeGenBase = par1ArrayOfBiomeGenBase
         IntCache.resetIntCache()
         if (par1ArrayOfBiomeGenBase == null || par1ArrayOfBiomeGenBase.size < par4 * par5) {
-            par1ArrayOfBiomeGenBase = arrayOfNulls(par4 * par5)
+            par1ArrayOfBiomeGenBase = arrayOfNulls(par4 * par5);
         }
         for (var7 in 0 until par4 * par5) {
-            par1ArrayOfBiomeGenBase[var7] = this.getBiome()
+            par1ArrayOfBiomeGenBase[var7] = getBiome()
         }
         return par1ArrayOfBiomeGenBase
     }

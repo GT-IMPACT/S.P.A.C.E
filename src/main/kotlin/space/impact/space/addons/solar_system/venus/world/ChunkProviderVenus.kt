@@ -1,39 +1,46 @@
-package space.impact.space.addons.solar_system.earth.moons.moon.world
+package space.impact.space.addons.solar_system.venus.world
 
 import net.minecraft.block.Block
+import net.minecraft.init.Blocks
 import net.minecraft.world.World
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraft.world.chunk.IChunkProvider
 import space.impact.space.addons.solar_system.SolarSystem
-import space.impact.space.api.world.gen.biome.BiomeDecoratorEmpty
 import space.impact.space.api.world.gen.biome.BiomeDecoratorSpaceBase
 import space.impact.space.api.world.gen.biome.SpaceBiomeGenBase
 import space.impact.space.api.world.gen.chunk.ChunkProviderSpaceLakes
 import space.impact.space.api.world.gen.other.BlockMetaPair
 import space.impact.space.api.world.gen.world.MapGenMetaBase
 
-class ChunkProviderMoon(val world: World, seed: Long, flag: Boolean) : ChunkProviderSpaceLakes(world, seed, flag) {
+class ChunkProviderVenus(world: World, seed: Long, flag: Boolean) : ChunkProviderSpaceLakes(world, seed, flag) {
 
     companion object {
-        private val BLOCK_GRUNT = BlockMetaPair(SolarSystem.MOON_BLOCKS, 0)
-        private val BLOCK_STONE = BlockMetaPair(SolarSystem.MOON_BLOCKS, 1)
-        private val BLOCK_DEEP_STONE = BlockMetaPair(SolarSystem.MOON_BLOCKS, 2)
+        private val BLOCK_GRUNT = BlockMetaPair(SolarSystem.VENUS_BLOCKS, 0)
+        private val BLOCK_STONE = BlockMetaPair(SolarSystem.VENUS_BLOCKS, 1)
+        private val BLOCK_DEEP_STONE = BlockMetaPair(SolarSystem.VENUS_BLOCKS, 1)
     }
 
+    override var generatedBiomes: Array<BiomeGenBase> = getBiomesForGeneration()
+    private val caveGenerator = MapGenCavesVenus()
+
     override fun getWorldGenerators(): List<MapGenMetaBase> {
-        return listOf()
+        return listOf(caveGenerator)
     }
 
     override fun getBiomeGenerator(): BiomeDecoratorSpaceBase {
-        return BiomeDecoratorEmpty()
+        return BiomeDecoratorVenus()
     }
 
     override fun getBiomesForGeneration(): Array<BiomeGenBase> {
-        return arrayOf(SpaceBiomeGenBase.SPACE.setBiomeName("Moon"))
+        return arrayOf(
+            SpaceBiomeGenBase.SPACE_LOW_HILLS.setBiomeName("VenusLowHills"),
+            SpaceBiomeGenBase.SPACE_LOW_PLAINS.setBiomeName("VenusLowPlains"),
+            SpaceBiomeGenBase.SPACE_SHALLOW_WATERS.setBiomeName("VenusShallowWaters"),
+        )
     }
 
     override fun getCraterProbability(): Int {
-        return 60
+        return 0
     }
 
     override fun getCreatures(): Array<BiomeGenBase.SpawnListEntry?> {
@@ -41,7 +48,7 @@ class ChunkProviderMoon(val world: World, seed: Long, flag: Boolean) : ChunkProv
     }
 
     override fun getHeightModifier(): Double {
-        return 8.0
+        return 50.0
     }
 
     override fun getMonsters(): Array<BiomeGenBase.SpawnListEntry?> {
@@ -49,15 +56,15 @@ class ChunkProviderMoon(val world: World, seed: Long, flag: Boolean) : ChunkProv
     }
 
     override fun getMountainHeightModifier(): Double {
-        return 20.0
+        return 40.0
     }
 
     override fun getSmallFeatureHeightModifier(): Double {
-        return 20.0
+        return 5.0
     }
 
     override fun getValleyHeightModifier(): Double {
-        return 5.0
+        return 50.0
     }
 
     override fun onChunkProvider(cX: Int, cZ: Int, blocks: Array<Block?>, metadata: ByteArray) {}
@@ -82,7 +89,7 @@ class ChunkProviderMoon(val world: World, seed: Long, flag: Boolean) : ChunkProv
     }
 
     override fun enableBiomeGenBaseBlock(): Boolean {
-        return true
+        return false
     }
 
     override fun getTypeGen(): Int {
@@ -98,23 +105,18 @@ class ChunkProviderMoon(val world: World, seed: Long, flag: Boolean) : ChunkProv
     }
 
     override fun canGeneratePostBedrock(): Boolean {
-        return true
+        return false
     }
 
     override fun getWaterBlock(): BlockMetaPair {
-        return BLOCK_DEEP_STONE
-    }
-
-    override fun getDirtLayerSize(): Double {
-        return 5.0
+        return BlockMetaPair(Blocks.lava, 0)
     }
 
     override fun postBedrockBlock(): BlockMetaPair {
-        return BLOCK_DEEP_STONE
+        return BlockMetaPair(Blocks.air, 0)
     }
 
-    override fun makeString(): String {
-        return "MoonLevelSource"
+    override fun chunkExists(x: Int, z: Int): Boolean {
+        return false
     }
-
 }

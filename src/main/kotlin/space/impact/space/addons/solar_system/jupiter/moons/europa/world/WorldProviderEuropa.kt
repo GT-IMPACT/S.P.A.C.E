@@ -72,6 +72,11 @@ class WorldProviderEuropa : SpaceWorldProviderBase() {
     }
 
     @SideOnly(Side.CLIENT)
+    override fun getCloudRenderer(): IRenderHandler {
+        return CloudRenderer()
+    }
+
+    @SideOnly(Side.CLIENT)
     override fun getStarBrightness(par1: Float): Float {
         val var2 = worldObj.getCelestialAngle(par1)
         var var3 = 1.0f - (MathHelper.cos(var2 * Math.PI.toFloat() * 2.0f) * 2.0f + 0.25f)

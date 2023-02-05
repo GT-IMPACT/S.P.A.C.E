@@ -41,6 +41,9 @@ abstract class ChunkProviderSpaceLakes(
         const val SMALL_FEATURE_FILTER_MOD = 8.0
 
         const val MAX_BLOCK_IN_CHUNK = 16 * 16 * 256
+
+        const val GEN_TYPE_LAND_DEFAULT = 0
+        const val GEN_TYPE_LAND_BIOMES = 1
     }
 
     var genBlocks: ArrayList<GenBlocks> = ArrayList()
@@ -49,9 +52,9 @@ abstract class ChunkProviderSpaceLakes(
     private val myBiomeCache: BiomeCache? = null
 
     private val stoneNoise = DoubleArray(256)
+    private val terrainCalcs = DoubleArray(825)
 
-    @JvmField
-    protected var biomesForGeneration = getBiomesForGeneration()
+    protected open var generatedBiomes: Array<BiomeGenBase> = getBiomesForGeneration()
 
     private var noiseGenOctaves4: NoiseGeneratorOctaves = NoiseGeneratorOctaves(this.rand, 4)
     private var noiseGenOctaves5: NoiseGeneratorOctaves = NoiseGeneratorOctaves(this.rand, 10)
@@ -100,9 +103,9 @@ abstract class ChunkProviderSpaceLakes(
         if (getCraterProbability() > 0) {
             createCraters(x, z, blockStorage, metaStorage)
         }
-        biomesForGeneration = worldObj.worldChunkManager.loadBlockGeneratorData(biomesForGeneration, x * 16, z * 16, 16, 16)
+        generatedBiomes = worldObj.worldChunkManager.loadBlockGeneratorData(generatedBiomes, x * 16, z * 16, 16, 16)
 
-        replaceBlocksForBiome(x, z, blockStorage, metaStorage, biomesForGeneration)
+        replaceBlocksForBiome(x, z, blockStorage, metaStorage, generatedBiomes)
 
         if (worldGenerators == null) {
             worldGenerators = getWorldGenerators()
@@ -115,15 +118,75 @@ abstract class ChunkProviderSpaceLakes(
         val chunk = Chunk(worldObj, blockStorage, metaStorage, x, z)
         val chunkBiomes = chunk.biomeArray
         for (i in chunkBiomes.indices) {
-            chunkBiomes[i] = biomesForGeneration[i].biomeID.toByte()
+            chunkBiomes[i] = generatedBiomes[i].biomeID.toByte()
         }
         chunk.generateSkylightMap()
         return chunk
     }
 
     open fun generateTerrain(chunkX: Int, chunkZ: Int, blockStorage: Array<Block?>, metaStorage: ByteArray?) {
-        biomesForGeneration = worldObj.worldChunkManager.loadBlockGeneratorData(biomesForGeneration, chunkX * 4 - 2, chunkZ * 4 - 2, 10, 10)
-        makeLand(chunkX, chunkZ, blockStorage, ByteArray(65536))
+        val seaLevel = getWaterLevel()
+        generatedBiomes = worldObj.worldChunkManager.loadBlockGeneratorData(generatedBiomes, chunkX * 4 - 2, chunkZ * 4 - 2, 10, 10)
+        if (getTypeGen() == GEN_TYPE_LAND_BIOMES) {
+            makeLandPerBiome2(chunkX * 4, 0, chunkZ * 4)
+
+            for (k in 0..3) {
+                val l = k * 5
+                val i1 = (k + 1) * 5
+                for (j1 in 0..3) {
+                    val k1 = (l + j1) * 33
+                    val l1 = (l + j1 + 1) * 33
+                    val i2 = (i1 + j1) * 33
+                    val j2 = (i1 + j1 + 1) * 33
+                    for (k2 in 0..31) {
+                        val d0 = 0.125
+                        var d1: Double = this.terrainCalcs[k1 + k2]
+                        var d2: Double = this.terrainCalcs[l1 + k2]
+                        var d3: Double = this.terrainCalcs[i2 + k2]
+                        var d4: Double = this.terrainCalcs[j2 + k2]
+                        val d5: Double = (this.terrainCalcs[k1 + k2 + 1] - d1) * d0
+                        val d6: Double = (this.terrainCalcs[l1 + k2 + 1] - d2) * d0
+                        val d7: Double = (this.terrainCalcs[i2 + k2 + 1] - d3) * d0
+                        val d8: Double = (this.terrainCalcs[j2 + k2 + 1] - d4) * d0
+                        for (l2 in 0..7) {
+                            val d9 = 0.25
+                            var d10 = d1
+                            var d11 = d2
+                            val d12 = (d3 - d1) * d9
+                            val d13 = (d4 - d2) * d9
+                            for (i3 in 0..3) {
+                                var j3 = i3 + k * 4 shl 12 or (0 + j1 * 4 shl 8) or k2 * 8 + l2
+                                val short1: Short = 256
+                                j3 -= short1.toInt()
+                                val d14 = 0.25
+                                val d16 = (d11 - d10) * d14
+                                var d15 = d10 - d16
+                                for (k3 in 0..3) {
+                                    d15 += d16
+                                    j3 += short1
+                                    if (d15 > 0.0) {
+                                        blockStorage[j3] = getStoneBlock().block
+                                    } else if (k2 * 8 + l2 < seaLevel && canGenerateWaterBlock()) {
+                                        blockStorage[j3] = getWaterBlock().block
+                                    } else {
+                                        blockStorage[j3] = null
+                                    }
+                                }
+                                d10 += d12
+                                d11 += d13
+                            }
+                            d1 += d5
+                            d2 += d6
+                            d3 += d7
+                            d4 += d8
+                        }
+                    }
+                }
+            }
+
+        } else {
+            makeLand(chunkX, chunkZ, blockStorage, ByteArray(65536))
+        }
     }
 
     open fun makeLand(chunkX: Int, chunkZ: Int, idArray: Array<Block?>, metaArray: ByteArray) {
@@ -176,6 +239,7 @@ abstract class ChunkProviderSpaceLakes(
     }
 
     open fun makeLandPerBiome2(x: Int, zero: Int, z: Int) {
+
         octavesPickG = noiseGenOctaves6.generateNoiseOctaves(octavesPickG, x, z, 5, 5, 200.0, 200.0, 0.5)
         octavesPickD = noiseGenOctavesZ.generateNoiseOctaves(octavesPickD, x, zero, z, 5, 33, 5, 8.555150000000001, 4.277575000000001, 8.555150000000001)
         octavesPickE = noiseGenOctavesX.generateNoiseOctaves(octavesPickE, x, zero, z, 5, 33, 5, 684.412, 684.412, 684.412)
@@ -189,10 +253,10 @@ abstract class ChunkProviderSpaceLakes(
                 var totalHeight = 0.0f
                 var totalFactor = 0.0f
                 val two: Byte = 2
-                val biomegenbase = biomesForGeneration[ax + 2 + (az + 2) * 10]
+                val biomegenbase = generatedBiomes[ax + 2 + (az + 2) * 10]
                 for (ox in -two..two) {
                     for (oz in -two..two) {
-                        val biomegenbase1 = biomesForGeneration[ax + ox + 2 + (az + oz + 2) * 10]
+                        val biomegenbase1 = generatedBiomes[ax + ox + 2 + (az + oz + 2) * 10]
                         val rootHeight = biomegenbase1.rootHeight
                         val heightVariation = biomegenbase1.heightVariation
                         var heightFactor = parabolicField[ox + 2 + (oz + 2) * 5] / (rootHeight + 2.0f)
@@ -545,6 +609,8 @@ abstract class ChunkProviderSpaceLakes(
     protected abstract fun getStoneBlock(): BlockMetaPair
 
     protected abstract fun enableBiomeGenBaseBlock(): Boolean
+
+    protected abstract fun getTypeGen(): Int
 
     open fun getTerrainLevel(): Int {
         return getWaterLevel()

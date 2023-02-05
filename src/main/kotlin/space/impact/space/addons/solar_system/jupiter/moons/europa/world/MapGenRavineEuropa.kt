@@ -53,7 +53,7 @@ class MapGenRavineEuropa : MapGenMetaBase() {
             rs[k1] = f5 * f5
         }
         while (ii1 < ii2) {
-            var d12 = 1.5 + (MathHelper.sin(ii1.toFloat() * 3.1415927f / ii2.toFloat()) * f1 * 1.0f).toDouble()
+            var d12 = 1.5 + (MathHelper.sin(ii1.toFloat() * Math.PI.toFloat() / ii2.toFloat()) * f1 * 1.0f).toDouble()
             var d6 = d12 * multiply
             d12 *= rand.nextFloat().toDouble() * 0.25 + 0.75
             d6 *= rand.nextFloat().toDouble() * 0.25 + 0.75
