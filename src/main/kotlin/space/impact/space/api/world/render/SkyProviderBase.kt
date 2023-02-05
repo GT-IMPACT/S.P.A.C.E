@@ -536,12 +536,12 @@ abstract class SkyProviderBase : IRenderHandler() {
     }
 
     companion object {
-        private val sunTexture = ResourceLocation("textures/environment/sun.png")
-        private val lmcTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/LMC.png")
-        private val smcTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/SMC.png")
-        private val andromedaTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/Andromeda.png")
-        private val moonTexture: ResourceLocation = ResourceLocation("textures/environment/moon_phases.png")
-        private val barnardaloopTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/BarnardaLoop.png")
+        val sunTexture = ResourceLocation("textures/environment/sun.png")
+        val lmcTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/LMC.png")
+        val smcTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/SMC.png")
+        val andromedaTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/Andromeda.png")
+        val moonTexture: ResourceLocation = ResourceLocation("textures/environment/moon_phases.png")
+        val barnardaloopTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/BarnardaLoop.png")
         val pumpkinsunTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/pumkinsun.png")
 
         fun renderTestWithUV(tess: Tessellator, yMax: Double, xMin: Double, zMin: Double, xMax: Double, zMax: Double, uMin: Double, uMax: Double, vMin: Double, vMax: Double) {

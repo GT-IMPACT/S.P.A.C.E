@@ -96,4 +96,8 @@ class WorldProviderEuropa : SpaceWorldProviderBase() {
         }
         return super.getSkyRenderer()
     }
+
+    override fun getFallDamageModifier(): Float {
+        return 0.16f
+    }
 }

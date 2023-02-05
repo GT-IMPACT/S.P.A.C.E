@@ -175,6 +175,10 @@ class WorldProviderVenus : SpaceWorldProviderBase(), ILightning, PlanetFog {
         return 20
     }
 
+    override fun getFallDamageModifier(): Float {
+        return 0.8f
+    }
+
     override fun updateWeather() {
 //        super.updateWeather()
         if (!worldObj.isRemote) {

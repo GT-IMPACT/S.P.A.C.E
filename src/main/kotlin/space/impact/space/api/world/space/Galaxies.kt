@@ -9,5 +9,6 @@ object Galaxies {
     val EUROPE_MOON = Moon(3, "europa")
 
     val VENUS_PLANET = Planet(4, "venus")
+    val MARS_PLANET = Planet(5, "venus")
 
 }

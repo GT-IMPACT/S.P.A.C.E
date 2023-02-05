@@ -15,7 +15,6 @@ import net.minecraft.world.chunk.IChunkProvider
 import net.minecraftforge.client.IRenderHandler
 import space.impact.space.api.world.atmosphere.Atmospheric
 import space.impact.space.api.world.atmosphere.AtmosphericGas
-import space.impact.space.api.world.render.CloudRenderer
 import space.impact.space.api.world.world_math.Vector3
 import space.impact.space.config.Config
 import java.lang.reflect.Field
@@ -280,5 +279,9 @@ abstract class SpaceWorldProviderBase : WorldProvider(), SpaceProvider {
     @SideOnly(Side.CLIENT)
     override fun getCloudRenderer(): IRenderHandler? {
         return null
+    }
+
+    override fun getFallDamageModifier(): Float {
+        return 0.38f
     }
 }

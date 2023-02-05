@@ -10,6 +10,7 @@ public enum Mixins {
 	EntityItemMixin("minecraft.EntityItemMixin", TargetedMod.VANILLA),
 	EntityLivingBaseMixin("minecraft.EntityLivingBaseMixin", TargetedMod.VANILLA),
 	EntityRendererMixin("minecraft.EntityRendererMixin", TargetedMod.VANILLA),
+	TeleporterMixin("minecraft.TeleporterMixin", TargetedMod.VANILLA),
 	;
 	
 	public final String mixinClass;

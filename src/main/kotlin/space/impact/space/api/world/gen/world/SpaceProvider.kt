@@ -49,4 +49,11 @@ interface SpaceProvider {
      */
     fun getCelestialBody(): CelestialBody
 
+    /**
+     * Fall damage will be multiplied by this number while on the planets.
+     *
+     * Fall damage multiplier, returning 1 will be equal to earth.
+     */
+    fun getFallDamageModifier(): Float
+
 }

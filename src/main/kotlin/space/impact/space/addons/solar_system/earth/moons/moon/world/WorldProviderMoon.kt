@@ -104,4 +104,8 @@ class WorldProviderMoon : SpaceWorldProviderBase() {
     override fun getCloudRenderer(): IRenderHandler {
         return CloudRenderer()
     }
+
+    override fun getFallDamageModifier(): Float {
+        return 0.18f
+    }
 }
