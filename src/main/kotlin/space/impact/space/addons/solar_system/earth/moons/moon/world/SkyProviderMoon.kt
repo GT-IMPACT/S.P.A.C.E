@@ -4,7 +4,7 @@ import cpw.mods.fml.client.FMLClientHandler
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
-import space.impact.space.ASSETS
+import space.impact.space.MODID
 import space.impact.space.api.world.render.SkyProviderBase
 import space.impact.space.api.world.world_math.Vector3
 import space.impact.space.config.Config
@@ -56,7 +56,7 @@ class SkyProviderMoon : SkyProviderBase() {
     }
 
     override fun sunImage(): ResourceLocation {
-        return ResourceLocation(ASSETS, "textures/gui/sun_blank.png")
+        return ResourceLocation(MODID, "textures/gui/sun_blank.png")
     }
 
     override fun enableStar(): Boolean {
@@ -76,6 +76,6 @@ class SkyProviderMoon : SkyProviderBase() {
     }
 
     companion object {
-        private val earthTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/gui/sol/earth.png")
+        private val earthTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/earth.png")
     }
 }

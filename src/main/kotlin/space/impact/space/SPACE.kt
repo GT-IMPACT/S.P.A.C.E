@@ -15,7 +15,7 @@ import space.impact.space.proxy.CommonProxy
 )
 object SPACE {
 
-    @SidedProxy(clientSide = "$GROUPNAME.proxy.ClientProxy", serverSide = "$GROUPNAME.proxy.CommonProxy")
+    @SidedProxy(clientSide = "$GROUPNAME.$MODID.proxy.ClientProxy", serverSide = "$GROUPNAME.$MODID.proxy.CommonProxy")
     lateinit var proxy: CommonProxy
 
     @Mod.InstanceFactory

@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.Tessellator
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11.GL_TEXTURE_2D
-import space.impact.space.ASSETS
+import space.impact.space.MODID
 import space.impact.space.api.world.gen.world.SpaceWorldProviderBase
 import space.impact.space.api.world.render.SkyProviderBase
 import space.impact.space.api.world.world_math.Vector3
@@ -15,10 +15,10 @@ import kotlin.math.sin
 class SkyProviderEuropa : SkyProviderBase() {
 
     companion object {
-        private val jupiterTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/gui/sol/jupiter.png")
-        private val ioTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/gui/sol/moons/io.png")
-        private val ganymedeTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/gui/sol/moons/ganymede.png")
-        private val callistoTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/gui/sol/moons/callisto.png")
+        private val jupiterTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/jupiter.png")
+        private val ioTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/io.png")
+        private val ganymedeTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/ganymede.png")
+        private val callistoTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/callisto.png")
     }
 
     var test = false
@@ -199,7 +199,7 @@ class SkyProviderEuropa : SkyProviderBase() {
     }
 
     override fun sunImage(): ResourceLocation {
-        return ResourceLocation(ASSETS, "textures/gui/sun_blank.png")
+        return ResourceLocation(MODID, "textures/gui/sun_blank.png")
     }
 
     override fun modeLight(): Int {

@@ -17,7 +17,7 @@ import net.minecraftforge.client.IRenderHandler
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11.GL_BLEND
 import org.lwjgl.opengl.GL11.GL_TEXTURE_2D
-import space.impact.space.ASSETS
+import space.impact.space.MODID
 import space.impact.space.api.world.gen.world.SpaceProvider
 import space.impact.space.api.world.world_math.Vector3
 import space.impact.space.config.Config
@@ -482,7 +482,7 @@ abstract class SkyProviderBase : IRenderHandler() {
     }
 
     init {
-        planetToRender = ResourceLocation(ASSETS, "textures/gui/celestialbodies/earth.png")
+        planetToRender = ResourceLocation(MODID, "textures/gui/celestialbodies/earth.png")
         afloat = FloatArray(4)
         mc = Minecraft.getMinecraft()
         val displayLists = GLAllocation.generateDisplayLists(3)
@@ -537,12 +537,12 @@ abstract class SkyProviderBase : IRenderHandler() {
 
     companion object {
         val sunTexture = ResourceLocation("textures/environment/sun.png")
-        val lmcTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/LMC.png")
-        val smcTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/SMC.png")
-        val andromedaTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/Andromeda.png")
+        val lmcTexture: ResourceLocation = ResourceLocation(MODID, "textures/environment/background/LMC.png")
+        val smcTexture: ResourceLocation = ResourceLocation(MODID, "textures/environment/background/SMC.png")
+        val andromedaTexture: ResourceLocation = ResourceLocation(MODID, "textures/environment/background/Andromeda.png")
         val moonTexture: ResourceLocation = ResourceLocation("textures/environment/moon_phases.png")
-        val barnardaloopTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/background/BarnardaLoop.png")
-        val pumpkinsunTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/environment/pumkinsun.png")
+        val barnardaloopTexture: ResourceLocation = ResourceLocation(MODID, "textures/environment/background/BarnardaLoop.png")
+        val pumpkinsunTexture: ResourceLocation = ResourceLocation(MODID, "textures/environment/pumkinsun.png")
 
         fun renderTestWithUV(tess: Tessellator, yMax: Double, xMin: Double, zMin: Double, xMax: Double, zMax: Double, uMin: Double, uMax: Double, vMin: Double, vMax: Double) {
             tess.setNormal(0.0f, 1.0f, 0.0f)

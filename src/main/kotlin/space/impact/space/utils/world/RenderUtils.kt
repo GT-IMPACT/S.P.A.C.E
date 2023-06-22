@@ -14,6 +14,7 @@ import kotlin.math.cos
 
 object RenderUtils {
 
+    @JvmStatic
     fun calculateCelestialAngle(worldtime: Long, ticks: Float, daylenght: Float): Float {
         val j = (worldtime.toFloat() % daylenght).toInt()
         var f1 = (j.toFloat() + ticks) / daylenght - 0.25f
@@ -29,6 +30,7 @@ object RenderUtils {
         return f1
     }
 
+    @JvmStatic
     @SideOnly(Side.CLIENT)
     fun getWorldBrightness(world: WorldClient): Float {
         if (world.provider is WorldProviderMoon) {
@@ -46,30 +48,33 @@ object RenderUtils {
         return world.getSunBrightness(1.0f)
     }
 
+    @JvmStatic
     fun getColorRed(world: World?): Float {
         return getWorldColor(world).x.toFloat()
     }
 
+    @JvmStatic
     fun getColorGreen(world: World?): Float {
         return getWorldColor(world).y.toFloat()
     }
 
+    @JvmStatic
     fun getColorBlue(world: World?): Float {
         return getWorldColor(world).z.toFloat()
     }
 
+    @JvmStatic
     fun getFogColorHook(world: World): Vec3? {
         return world.getFogColor(1.0f)
     }
 
+    @JvmStatic
     fun getWorldColor(world: World?): Vector3 {
         return Vector3(1, 1, 1)
     }
 
+    @JvmStatic
     fun getSkyColorHook(world: World): Vec3? {
         return world.getSkyColor(FMLClientHandler.instance().client.renderViewEntity, 1.0f)
     }
-
-
-
 }

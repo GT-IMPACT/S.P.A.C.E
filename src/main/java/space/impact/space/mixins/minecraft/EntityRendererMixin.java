@@ -23,10 +23,12 @@ public class EntityRendererMixin {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/multiplayer/WorldClient;getSunBrightness(F)F",
-                    ordinal = 0),
-            require = 1)
+                    ordinal = 0
+            ),
+            require = 1
+    )
     private float onUpdateLightmap(WorldClient world, float constOne) {
-        return RenderUtils.INSTANCE.getWorldBrightness(world);
+        return RenderUtils.getWorldBrightness(world);
     }
 
     @Redirect(
@@ -36,7 +38,7 @@ public class EntityRendererMixin {
                     target = "Lnet/minecraft/client/multiplayer/WorldClient;getSkyColor(Lnet/minecraft/entity/Entity;F)Lnet/minecraft/util/Vec3;"),
             require = 1)
     private Vec3 onUpdateSkyColor(WorldClient world, Entity entity, float v) {
-        return RenderUtils.INSTANCE.getSkyColorHook(world);
+        return RenderUtils.getSkyColorHook(world);
     }
 
     @ModifyVariable(
@@ -45,7 +47,7 @@ public class EntityRendererMixin {
             ordinal = 8,
             require = 1)
     private float onUpdateLightmapRed(float value) {
-        return RenderUtils.INSTANCE.getColorRed(this.mc.theWorld) * value;
+        return RenderUtils.getColorRed(this.mc.theWorld) * value;
     }
 
     @ModifyVariable(
@@ -54,7 +56,7 @@ public class EntityRendererMixin {
             ordinal = 9,
             require = 1)
     private float onUpdateLightmapGreen(float value) {
-        return RenderUtils.INSTANCE.getColorGreen(this.mc.theWorld) * value;
+        return RenderUtils.getColorGreen(this.mc.theWorld) * value;
     }
 
     @ModifyVariable(
@@ -63,6 +65,6 @@ public class EntityRendererMixin {
             ordinal = 10,
             require = 1)
     private float onUpdateLightmapBlue(float value) {
-        return RenderUtils.INSTANCE.getColorBlue(this.mc.theWorld) * value;
+        return RenderUtils.getColorBlue(this.mc.theWorld) * value;
     }
 }

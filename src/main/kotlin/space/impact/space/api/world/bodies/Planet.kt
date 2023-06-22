@@ -1,7 +1,7 @@
 package space.impact.space.api.world.bodies
 
 import net.minecraft.util.ResourceLocation
-import space.impact.space.ASSETS
+import space.impact.space.MODID
 import space.impact.space.api.world.atmosphere.AtmosphericGas
 import space.impact.space.api.world.world_math.ScalableDistance
 
@@ -19,5 +19,5 @@ class Planet(
 
     override fun getRelativeDistanceFromCenter(): ScalableDistance = ScalableDistance(0f, 0f)
 
-    override fun getBodyIcon(): ResourceLocation = ResourceLocation(ASSETS, "textures/gui/sol/planet/$name.png")
+    override fun getBodyIcon(): ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/planet/$name.png")
 }

@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Vec3
 import net.minecraftforge.client.IRenderHandler
 import org.lwjgl.opengl.GL11
-import space.impact.space.ASSETS
+import space.impact.space.MODID
 import space.impact.space.api.world.render.SkyProviderBase.Companion.andromedaTexture
 import java.util.*
 
@@ -382,9 +382,9 @@ class SkyProviderMars(private val marsProvider : WorldProviderMars) : IRenderHan
     }
 
     companion object {
-        private val overworldTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/gui/sol/earth.png")
-        private val phobosTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/gui/sol/moons/phobos.png")
-        private val deimosTexture: ResourceLocation = ResourceLocation(ASSETS, "textures/gui/sol/moons/deimos.png")
+        private val overworldTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/earth.png")
+        private val phobosTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/phobos.png")
+        private val deimosTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/deimos.png")
         private val sunTexture = ResourceLocation("textures/environment/sun.png")
     }
 }

@@ -13,7 +13,7 @@ import net.minecraft.item.ItemBlock
 import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import space.impact.space.ASSETS
+import space.impact.space.MODID
 import space.impact.space.addons.solar_system.SolarSystem
 
 open class BasicBlock(
@@ -36,7 +36,7 @@ open class BasicBlock(
     @SideOnly(Side.CLIENT)
     override fun registerBlockIcons(reg: IIconRegister) {
         blocks.forEachIndexed { index, s ->
-            icons[index] = reg.registerIcon("$ASSETS:$system/$textureFolder/${s.lowercase()}")
+            icons[index] = reg.registerIcon("$MODID:$system/$textureFolder/${s.lowercase()}")
         }
     }
 

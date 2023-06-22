@@ -1,21 +1,13 @@
-{
-	"modListVersion": 2,
-	"modList": [{
-		"modid": "${modId}",
-		"name": "${modName}",
-		"description": "S.P.A.C.E mod for modpack IMPACT",
-		"version": "${modVersion}",
-		"mcversion": "${minecraftVersion}",
-		"url": "https://github.com/GT-IMPACT/S.P.A.C.E",
-		"updateUrl": "",
-		"authorList": ["IMPACT"],
-		"credits": "",
-		"logoFile": "",
-		"screenshots": [],
-		"parent": "",
-		"requiredMods": [],
-		"dependencies": [],
-		"dependants": [],
-		"useDependencyInformation": true
-	}]
-}
+[
+  {
+    "modid": "${modId}",
+    "name": "${modName}",
+    "version": "${modVersion}",
+    "mcversion": "${minecraftVersion}",
+    "description": "",
+    "url": "",
+    "credits": "",
+    "authorList": ["IMPACT"],
+    "dependencies": []
+  }
+]

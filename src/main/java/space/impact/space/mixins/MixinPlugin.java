@@ -3,6 +3,7 @@ package space.impact.space.mixins;
 import net.minecraft.launchwrapper.Launch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import ru.timeconqueror.spongemixins.MinecraftURLClassPath;
@@ -69,14 +70,14 @@ public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public void preApply(
             String s,
-            org.spongepowered.libraries.org.objectweb.asm.tree.ClassNode classNode,
+            ClassNode classNode,
             String s1,
             IMixinInfo iMixinInfo) {}
 
     @Override
     public void postApply(
             String s,
-            org.spongepowered.libraries.org.objectweb.asm.tree.ClassNode classNode,
+            ClassNode classNode,
             String s1,
             IMixinInfo iMixinInfo) {}
 

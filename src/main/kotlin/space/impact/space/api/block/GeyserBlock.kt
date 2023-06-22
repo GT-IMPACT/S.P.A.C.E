@@ -12,7 +12,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import space.impact.space.ASSETS
+import space.impact.space.MODID
 import space.impact.space.SPACE
 import space.impact.space.api.world.world_math.Vector3
 import space.impact.space.client.effects.EffectData
@@ -36,7 +36,7 @@ class GeyserBlock(system: String, blockName: String, textureFolder: String, bloc
     @SideOnly(Side.CLIENT)
     override fun registerBlockIcons(reg: IIconRegister) {
         blocks.forEachIndexed { index, s ->
-            val path = "$ASSETS:$system/$textureFolder/${s.lowercase()}"
+            val path = "$MODID:$system/$textureFolder/${s.lowercase()}"
             iconsTop[index] = reg.registerIcon("${path}_top")
             icons[index] = reg.registerIcon(if (s == "under_water") "ice_packed" else path)
         }

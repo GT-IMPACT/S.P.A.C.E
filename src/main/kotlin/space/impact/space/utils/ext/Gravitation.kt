@@ -8,6 +8,7 @@ import space.impact.space.api.world.gen.world.SpaceProvider
 
 object Gravitation {
 
+    @JvmStatic
     fun setGravityEntity(e: Entity): Double {
         val provider = e.worldObj.provider
         if (provider is SpaceProvider) {
@@ -50,6 +51,8 @@ object Gravitation {
         return 0.08
     }
 
+
+    @JvmStatic
     fun setItemGravity(e: EntityItem): Double {
         return if (e.worldObj.provider is SpaceProvider) {
             val customProvider: SpaceProvider = e.worldObj.provider as SpaceProvider

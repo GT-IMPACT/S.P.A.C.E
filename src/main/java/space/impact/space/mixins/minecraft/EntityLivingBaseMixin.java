@@ -16,7 +16,7 @@ public abstract class EntityLivingBaseMixin extends Entity {
 	
 	@ModifyConstant(method = "moveEntityWithHeading(FF)V", constant = @Constant(doubleValue = 0.08D), require = 1)
 	private double onMoveEntityWithHeading(double value) {
-		return Gravitation.INSTANCE.setGravityEntity(this);
+		return Gravitation.setGravityEntity(this);
 	}
 	
 }
