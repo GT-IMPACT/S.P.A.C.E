@@ -9,7 +9,7 @@ import space.impact.space.utils.ext.Gravitation;
 @Mixin(EntityItem.class)
 public abstract class EntityItemMixin {
 	
-	@ModifyConstant(method = "onUpdate", constant = @Constant(doubleValue = 0.03999999910593033D), require = 1)
+	@ModifyConstant(method = "onUpdate", constant = @Constant(doubleValue = 0.03999999910593033D), require = 1, remap = false)
 	private double onOnUpdate(double value) {
 		return Gravitation.setItemGravity((EntityItem) (Object) this);
 	}

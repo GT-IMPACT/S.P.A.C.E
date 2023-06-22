@@ -257,10 +257,10 @@ abstract class ChunkProviderSpaceLakes(
                 for (ox in -two..two) {
                     for (oz in -two..two) {
                         val biomegenbase1 = generatedBiomes[ax + ox + 2 + (az + oz + 2) * 10]
-                        val rootHeight = biomegenbase1.rootHeight
-                        val heightVariation = biomegenbase1.heightVariation
+                        val rootHeight = biomegenbase1.minHeight
+                        val heightVariation = biomegenbase1.maxHeight
                         var heightFactor = parabolicField[ox + 2 + (oz + 2) * 5] / (rootHeight + 2.0f)
-                        if (biomegenbase1.rootHeight > biomegenbase.rootHeight) {
+                        if (biomegenbase1.minHeight > biomegenbase.minHeight) {
                             heightFactor /= 2.0f
                         }
                         totalVariation += heightVariation * heightFactor
@@ -542,7 +542,7 @@ abstract class ChunkProviderSpaceLakes(
 
     override fun saveExtraData() {}
 
-    override fun func_147416_a(world: World?, string: String?, x: Int, y: Int, z: Int): ChunkPosition? {
+    override fun findClosestStructure(world: World?, string: String?, x: Int, y: Int, z: Int): ChunkPosition? {
         return null
     }
 

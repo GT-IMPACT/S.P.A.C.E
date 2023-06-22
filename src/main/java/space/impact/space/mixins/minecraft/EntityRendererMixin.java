@@ -15,7 +15,7 @@ import space.impact.space.utils.world.RenderUtils;
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin {
 
-    @Shadow
+    @Shadow(remap = false)
     private Minecraft mc;
 
     @Redirect(
@@ -23,9 +23,11 @@ public class EntityRendererMixin {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/multiplayer/WorldClient;getSunBrightness(F)F",
-                    ordinal = 0
+                    ordinal = 0,
+                    remap = false
             ),
-            require = 1
+            require = 1,
+            remap = false
     )
     private float onUpdateLightmap(WorldClient world, float constOne) {
         return RenderUtils.getWorldBrightness(world);
@@ -36,7 +38,9 @@ public class EntityRendererMixin {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/multiplayer/WorldClient;getSkyColor(Lnet/minecraft/entity/Entity;F)Lnet/minecraft/util/Vec3;"),
-            require = 1)
+            require = 1,
+            remap = false
+    )
     private Vec3 onUpdateSkyColor(WorldClient world, Entity entity, float v) {
         return RenderUtils.getSkyColorHook(world);
     }
@@ -45,7 +49,9 @@ public class EntityRendererMixin {
             method = "updateLightmap",
             at = @At(value = "CONSTANT", args = "intValue=255", shift = At.Shift.BEFORE),
             ordinal = 8,
-            require = 1)
+            require = 1,
+            remap = false
+    )
     private float onUpdateLightmapRed(float value) {
         return RenderUtils.getColorRed(this.mc.theWorld) * value;
     }
@@ -54,7 +60,9 @@ public class EntityRendererMixin {
             method = "updateLightmap",
             at = @At(value = "CONSTANT", args = "intValue=255", shift = At.Shift.BEFORE),
             ordinal = 9,
-            require = 1)
+            require = 1,
+            remap = false
+    )
     private float onUpdateLightmapGreen(float value) {
         return RenderUtils.getColorGreen(this.mc.theWorld) * value;
     }
@@ -63,7 +71,9 @@ public class EntityRendererMixin {
             method = "updateLightmap",
             at = @At(value = "CONSTANT", args = "intValue=255", shift = At.Shift.BEFORE),
             ordinal = 10,
-            require = 1)
+            require = 1,
+            remap = false
+    )
     private float onUpdateLightmapBlue(float value) {
         return RenderUtils.getColorBlue(this.mc.theWorld) * value;
     }

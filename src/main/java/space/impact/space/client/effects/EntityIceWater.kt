@@ -96,7 +96,7 @@ class EntityIceWater(
         }
         val vec31 = Vec3.createVectorHelper(posX, posY, posZ)
         var vec3 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ)
-        var movingobjectposition = worldObj.func_147447_a(vec31, vec3, false, true, false)
+        var movingobjectposition = worldObj.rayTraceBlocks(vec31, vec3, false, true, false)
         if (movingobjectposition != null) {
             vec3 = Vec3.createVectorHelper(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord)
         }

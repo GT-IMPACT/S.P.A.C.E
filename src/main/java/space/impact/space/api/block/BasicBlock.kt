@@ -27,14 +27,14 @@ open class BasicBlock(
     protected var icons: Array<IIcon?> = arrayOfNulls(blocks.size)
 
     init {
-        setBlockName(blockName)
+        unlocalizedName = blockName
         setHardness(2.0f)
         setHarvestLevel("pickaxe", 2)
         GameRegistry.registerBlock(this, BasicItemBlock::class.java, blockName)
     }
 
     @SideOnly(Side.CLIENT)
-    override fun registerBlockIcons(reg: IIconRegister) {
+    override fun registerIcons(reg: IIconRegister) {
         blocks.forEachIndexed { index, s ->
             icons[index] = reg.registerIcon("$MODID:$system/$textureFolder/${s.lowercase()}")
         }
@@ -57,17 +57,17 @@ open class BasicBlock(
     }
 
     override fun onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, entity: EntityLivingBase?, stack: ItemStack) {
-        world.setBlockMetadataWithNotify(x, y, z, stack.itemDamage, 3)
+        world.setBlockMetadataWithNotify(x, y, z, stack.metadata, 3)
     }
 
     class BasicItemBlock(block: Block) : ItemBlock(block) {
         init {
-            maxDamage = 0
+            maxDurability = 0
             hasSubtypes = true
         }
 
         override fun getUnlocalizedName(stack: ItemStack): String {
-            return "$unlocalizedName.${stack.itemDamage}"
+            return "$unlocalizedName.${stack.metadata}"
         }
     }
 }

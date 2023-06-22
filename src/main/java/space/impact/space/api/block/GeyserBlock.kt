@@ -34,7 +34,7 @@ class GeyserBlock(system: String, blockName: String, textureFolder: String, bloc
     }
 
     @SideOnly(Side.CLIENT)
-    override fun registerBlockIcons(reg: IIconRegister) {
+    override fun registerIcons(reg: IIconRegister) {
         blocks.forEachIndexed { index, s ->
             val path = "$MODID:$system/$textureFolder/${s.lowercase()}"
             iconsTop[index] = reg.registerIcon("${path}_top")
