@@ -15,12 +15,16 @@ import org.lwjgl.opengl.GL11
 import space.impact.space.MODID
 import space.impact.space.api.world.render.SkyProviderBase.Companion.andromedaTexture
 import java.util.*
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
-class SkyProviderMars(private val marsProvider : WorldProviderMars) : IRenderHandler() {
+class SkyProviderMars(marsProvider : WorldProviderMars) : IRenderHandler() {
 
-    var starList: Int
-    var glSkyList: Int
-    var glSkyList2: Int
+    private var starList: Int
+    private var glSkyList: Int
+    private var glSkyList2: Int
     private val sunSize: Float
 
     init {
@@ -37,9 +41,8 @@ class SkyProviderMars(private val marsProvider : WorldProviderMars) : IRenderHan
         val tessellator = Tessellator.instance
         GL11.glNewList(glSkyList, 4864)
         var f = 16.0f
-        var k: Int
         var i1: Int
-        k = -384
+        var k: Int = -384
         while (k <= 384) {
             i1 = -384
             while (i1 <= 384) {
@@ -331,22 +334,22 @@ class SkyProviderMars(private val marsProvider : WorldProviderMars) : IRenderHan
             val var10 = (0.15f + rand.nextFloat() * 0.1f).toDouble()
             var var12 = var4 * var4 + var6 * var6 + var8 * var8
             if (var12 < 1.0 && var12 > 0.01) {
-                var12 = 1.0 / Math.sqrt(var12)
+                var12 = 1.0 / sqrt(var12)
                 var4 *= var12
                 var6 *= var12
                 var8 *= var12
                 val var14 = var4 * 100.0
                 val var16 = var6 * 100.0
                 val var18 = var8 * 100.0
-                val var20 = Math.atan2(var4, var8)
-                val var22 = Math.sin(var20)
-                val var24 = Math.cos(var20)
-                val var26 = Math.atan2(Math.sqrt(var4 * var4 + var8 * var8), var6)
-                val var28 = Math.sin(var26)
-                val var30 = Math.cos(var26)
+                val var20 = atan2(var4, var8)
+                val var22 = sin(var20)
+                val var24 = cos(var20)
+                val var26 = atan2(sqrt(var4 * var4 + var8 * var8), var6)
+                val var28 = sin(var26)
+                val var30 = cos(var26)
                 val var32 = rand.nextDouble() * Math.PI * 2.0
-                val var34 = Math.sin(var32)
-                val var36 = Math.cos(var32)
+                val var34 = sin(var32)
+                val var36 = cos(var32)
                 for (var38 in 0..3) {
                     val var39 = 0.0
                     val var41 = ((var38 and 2) - 1).toDouble() * var10

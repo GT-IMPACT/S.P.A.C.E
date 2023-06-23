@@ -46,7 +46,6 @@ class WeatherProviderVenus : IRenderHandler() {
                 range = 8
             }
             var b1: Byte = -1
-            val f5 = rendererUpdateCount.toFloat() + partialTicks
             if (mc.gameSettings.fancyGraphics) {
                 range = 10
             }

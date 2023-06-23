@@ -8,6 +8,7 @@ import space.impact.space.addons.solar_system.SolarSystem
 import space.impact.space.api.world.gen.world.MapGenMetaBase
 import java.util.*
 
+@Suppress("NAME_SHADOWING")
 class MapGenCavesVenus : MapGenMetaBase() {
     protected fun generateLargeCaveNode(par1: Long, par3: Int, par4: Int, blockIdArray: Array<Block?>, metaArray: ByteArray, par6: Double, par8: Double, par10: Double) {
         generateCaveNode(par1, par3, par4, blockIdArray, metaArray, par6, par8, par10, 1.0f + rand.nextFloat() * 6.0f, 0.0f, 0.0f, -1, -1, 0.5)
@@ -98,14 +99,13 @@ class MapGenCavesVenus : MapGenMetaBase() {
                     if (i3 > 16) {
                         i3 = 16
                     }
-                    val flag2 = false
                     var localY: Int
                     for (j3 in l1 until i2) {
                         localY = l2
                         while (localY < i3) {
                             var i4 = k2 + 1
                             while (i4 >= j2 - 1) {
-                                if (i4 >= 0 && i4 < 128 && i4 != j2 - 1 && j3 != l1 && j3 != i2 - 1 && localY != l2 && localY != i3 - 1) {
+                                if (i4 in 0..127 && i4 != j2 - 1 && j3 != l1 && j3 != i2 - 1 && localY != l2 && localY != i3 - 1) {
                                     i4 = j2
                                 }
                                 --i4
@@ -146,18 +146,18 @@ class MapGenCavesVenus : MapGenMetaBase() {
         }
     }
 
-    override fun recursiveGenerate(par1World: World, par2: Int, par3: Int, par4: Int, par5: Int, blockIdArray: Array<Block?>, metaArray: ByteArray) {
+    override fun recursiveGenerate(world: World, xChunkCoord: Int, zChunkCoord: Int, origXChunkCoord: Int, origZChunkCoord: Int, blocks: Array<Block?>, metadata: ByteArray) {
         var var7 = rand.nextInt(rand.nextInt(rand.nextInt(40) + 1) + 1)
         if (rand.nextInt(15) != 0) {
             var7 = 0
         }
         for (var8 in 0 until var7) {
-            val var9 = (par2 * 16 + rand.nextInt(16)).toDouble()
-            val var11 = rand.nextInt(rand.nextInt(120) + 8).toDouble()
-            val var13 = (par3 * 16 + rand.nextInt(16)).toDouble()
+            val var9 = (xChunkCoord * 16 + rand.nextInt(16)).toDouble()
+            val var11 = rand.nextInt(rand.nextInt(150) + 8).toDouble()
+            val var13 = (zChunkCoord * 16 + rand.nextInt(16)).toDouble()
             var var15 = 1
             if (rand.nextInt(4) == 0) {
-                generateLargeCaveNode(rand.nextLong(), par4, par5, blockIdArray, metaArray, var9, var11, var13)
+                generateLargeCaveNode(rand.nextLong(), origXChunkCoord, origZChunkCoord, blocks, metadata, var9, var11, var13)
                 var15 += rand.nextInt(4)
             }
             for (var16 in 0 until var15) {
@@ -167,7 +167,7 @@ class MapGenCavesVenus : MapGenMetaBase() {
                 if (rand.nextInt(10) == 0) {
                     var19 *= rand.nextFloat() * rand.nextFloat() * 3.0f + 1.0f
                 }
-                generateCaveNode(rand.nextLong(), par4, par5, blockIdArray, metaArray, var9, var11, var13, var19, var17, var18, 0, 0, 1.0)
+                generateCaveNode(rand.nextLong(), origXChunkCoord, origZChunkCoord, blocks, metadata, var9, var11, var13, var19, var17, var18, 0, 0, 1.0)
             }
         }
     }

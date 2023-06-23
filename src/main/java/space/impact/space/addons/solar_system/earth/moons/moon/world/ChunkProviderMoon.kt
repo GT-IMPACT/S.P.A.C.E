@@ -1,6 +1,7 @@
 package space.impact.space.addons.solar_system.earth.moons.moon.world
 
 import net.minecraft.block.Block
+import net.minecraft.world.ChunkPosition
 import net.minecraft.world.World
 import net.minecraft.world.biome.BiomeGenBase
 import net.minecraft.world.chunk.IChunkProvider

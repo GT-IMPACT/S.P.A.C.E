@@ -14,7 +14,7 @@ import space.impact.space.utils.world.RenderUtils;
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin {
 
-    private Minecraft mc = Minecraft.getMinecraft();
+    private final Minecraft mc = Minecraft.getMinecraft();
     
     @Redirect(
             method = "updateLightmap",

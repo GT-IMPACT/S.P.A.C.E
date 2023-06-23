@@ -37,11 +37,11 @@ class WorldProviderMars : SpaceWorldProviderBase() {
         return 24660L
     }
 
-    override fun getChunkProviderClass(): Class<out IChunkProvider>? {
+    override fun getChunkProviderClass(): Class<out IChunkProvider> {
         return ChunkProviderMars::class.java
     }
 
-    override fun getWorldChunkManagerClass(): Class<out WorldChunkManager>? {
+    override fun getWorldChunkManagerClass(): Class<out WorldChunkManager> {
         return WorldChunkManagerMars::class.java
     }
 

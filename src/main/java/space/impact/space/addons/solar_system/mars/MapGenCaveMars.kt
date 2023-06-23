@@ -8,6 +8,7 @@ import space.impact.space.addons.solar_system.SolarSystem
 import space.impact.space.api.world.gen.world.MapGenMetaBase
 import java.util.*
 
+@Suppress("NAME_SHADOWING")
 class MapGenCaveMars : MapGenMetaBase() {
     protected fun generateLargeCaveNode(
         par1: Long, par3: Int, par4: Int, blockIdArray: Array<Block?>, metaArray: ByteArray,
@@ -131,32 +132,30 @@ class MapGenCaveMars : MapGenMetaBase() {
                         }
                         ++j3
                     }
-                    if (true) {
-                        for (localY in j2 until k2) {
-                            val yfactor = (localY + 0.5 - par8) / d7
-                            val yfactorSq = yfactor * yfactor
-                            for (localX in l1 until i2) {
-                                val zfactor = (localX + par3 * 16 + 0.5 - par6) / d6
-                                val zfactorSq = zfactor * zfactor
-                                for (localZ in l2 until i3) {
-                                    val xfactor = (localZ + par4 * 16 + 0.5 - par10) / d6
-                                    val xfactorSq = xfactor * xfactor
-                                    if (xfactorSq + zfactorSq < 1.0) {
-                                        val coords = (localX * 16 + localZ) * 256 + localY
-                                        if (yfactor > -0.7 && xfactorSq + yfactorSq + zfactorSq < 1.0) {
-                                            if (blockIdArray[coords] == SolarSystem.MARS_BLOCKS) {
-                                                if (metaArray[coords].toInt() == 0 || metaArray[coords].toInt() == 1 || (metaArray[coords].toInt() == 2 && random.nextInt(BREAK_THROUGH_CHANCE) == 0)) {
-                                                    blockIdArray[coords] = Blocks.air
-                                                }
+                    for (localY in j2 until k2) {
+                        val yfactor = (localY + 0.5 - par8) / d7
+                        val yfactorSq = yfactor * yfactor
+                        for (localX in l1 until i2) {
+                            val zfactor = (localX + par3 * 16 + 0.5 - par6) / d6
+                            val zfactorSq = zfactor * zfactor
+                            for (localZ in l2 until i3) {
+                                val xfactor = (localZ + par4 * 16 + 0.5 - par10) / d6
+                                val xfactorSq = xfactor * xfactor
+                                if (xfactorSq + zfactorSq < 1.0) {
+                                    val coords = (localX * 16 + localZ) * 256 + localY
+                                    if (yfactor > -0.7 && xfactorSq + yfactorSq + zfactorSq < 1.0) {
+                                        if (blockIdArray[coords] == SolarSystem.MARS_BLOCKS) {
+                                            if (metaArray[coords].toInt() == 0 || metaArray[coords].toInt() == 1 || (metaArray[coords].toInt() == 2 && random.nextInt(BREAK_THROUGH_CHANCE) == 0)) {
+                                                blockIdArray[coords] = Blocks.air
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                        if (flag) {
-                            break
-                        }
+                    }
+                    if (flag) {
+                        break
                     }
                 }
             }
@@ -165,20 +164,20 @@ class MapGenCaveMars : MapGenMetaBase() {
     }
 
     override fun recursiveGenerate(
-        par1World: World, par2: Int, par3: Int, par4: Int, par5: Int, blockIdArray: Array<Block?>,
-        metaArray: ByteArray
+        world: World, xChunkCoord: Int, zChunkCoord: Int, origXChunkCoord: Int, origZChunkCoord: Int, blocks: Array<Block?>,
+        metadata: ByteArray
     ) {
         var var7 = rand.nextInt(rand.nextInt(rand.nextInt(40) + 1) + 1)
         if (rand.nextInt(15) != 0) {
             var7 = 0
         }
         for (var8 in 0 until var7) {
-            val var9 = (par2 * 16 + rand.nextInt(16)).toDouble()
+            val var9 = (xChunkCoord * 16 + rand.nextInt(16)).toDouble()
             val var11 = rand.nextInt(rand.nextInt(120) + 8).toDouble()
-            val var13 = (par3 * 16 + rand.nextInt(16)).toDouble()
+            val var13 = (zChunkCoord * 16 + rand.nextInt(16)).toDouble()
             var var15 = 1
             if (rand.nextInt(4) == 0) {
-                generateLargeCaveNode(rand.nextLong(), par4, par5, blockIdArray, metaArray, var9, var11, var13)
+                generateLargeCaveNode(rand.nextLong(), origXChunkCoord, origZChunkCoord, blocks, metadata, var9, var11, var13)
                 var15 += rand.nextInt(4)
             }
             for (var16 in 0 until var15) {
@@ -189,7 +188,7 @@ class MapGenCaveMars : MapGenMetaBase() {
                     var19 *= rand.nextFloat() * rand.nextFloat() * 3.0f + 1.0f
                 }
                 generateCaveNode(
-                    rand.nextLong(), par4, par5, blockIdArray, metaArray,
+                    rand.nextLong(), origXChunkCoord, origZChunkCoord, blocks, metadata,
                     var9, var11, var13, var19, var17, var18,
                     0, 0, 1.0
                 )

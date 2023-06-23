@@ -4,12 +4,15 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
+import net.minecraft.item.Item
 import net.minecraft.util.ChunkCoordinates
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.living.LivingFallEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
+import net.minecraftforge.event.world.BlockEvent
 import space.impact.space.api.events.LightningStormHandler.spawnLightning
 import space.impact.space.api.world.gen.world.SpaceProvider
+import space.impact.space.config.Config
 
 class EventHandler {
 
@@ -56,4 +59,14 @@ class EventHandler {
         }
     }
 
+    @SubscribeEvent
+    fun onPlaceBlock(event: BlockEvent.PlaceEvent) {
+        if (event.world.provider.dimensionId > 0) {
+            for (block in Config.blocksDisabledPlaceWorld) {
+                if (event.placedBlock == block) {
+                    event.isCanceled = true
+                }
+            }
+        }
+    }
 }

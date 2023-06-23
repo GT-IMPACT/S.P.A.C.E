@@ -150,12 +150,12 @@ class WorldProviderVenus : SpaceWorldProviderBase(), ILightning, PlanetFog {
     private val sky = CloudProviderVenus()
 
     @SideOnly(Side.CLIENT)
-    override fun getCloudRenderer(): IRenderHandler? {
+    override fun getCloudRenderer(): IRenderHandler {
         return cloud
     }
 
     @SideOnly(Side.CLIENT)
-    override fun getSkyRenderer(): IRenderHandler? {
+    override fun getSkyRenderer(): IRenderHandler {
         return sky
     }
 

@@ -7,7 +7,7 @@ import space.impact.space.api.world.world_math.Vector3
 
 class SkyProviderVenus : SkyProviderBase() {
 
-    override fun rendererSky(tessellator: Tessellator, f10: Float, partialTicks: Float) {}
+    override fun rendererSky(tess: Tessellator, f10: Float, partialTicks: Float) {}
 
     override fun enableBaseImages(): Boolean {
         return false
