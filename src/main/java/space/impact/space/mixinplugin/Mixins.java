@@ -9,7 +9,7 @@ public enum Mixins {
 	
 	EntityItemMixin("minecraft.EntityItemMixin", TargetedMod.VANILLA),
 	EntityLivingBaseMixin("minecraft.EntityLivingBaseMixin", TargetedMod.VANILLA),
-	EntityRendererMixin("minecraft.EntityRendererMixin", TargetedMod.VANILLA),
+	EntityRendererMixin("minecraft.EntityRendererMixin", Side.CLIENT, TargetedMod.VANILLA),
 	TeleporterMixin("minecraft.TeleporterMixin", TargetedMod.VANILLA),
 	;
 	
@@ -35,10 +35,12 @@ public enum Mixins {
 				|| side == Side.CLIENT && FMLLaunchHandler.side().isClient())
 				&& loadedMods.containsAll(targetedMods);
 	}
+	
+	enum Side {
+		BOTH,
+		CLIENT,
+		SERVER;
+	}
 }
 
-enum Side {
-	BOTH,
-	CLIENT,
-	SERVER;
-}
+
