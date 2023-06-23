@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8.5-GTNH",
   "package": "space.impact.space.mixins",
-  "plugin": "space.impact.space.mixins.MixinPlugin",
+  "plugin": "space.impact.space.mixinplugin.MixinPlugin",
   "refmap": "mixins.space.refmap.json",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",

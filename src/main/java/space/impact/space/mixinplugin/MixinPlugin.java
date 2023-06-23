@@ -1,4 +1,4 @@
-package space.impact.space.mixins;
+package space.impact.space.mixinplugin;
 
 import com.gtnewhorizon.gtnhmixins.MinecraftURLClassPath;
 import net.minecraft.launchwrapper.Launch;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 import static java.nio.file.Files.walk;
 import static space.impact.space.BuildConfigKt.MODID;
-import static space.impact.space.mixins.TargetedMod.VANILLA;
+import static space.impact.space.mixinplugin.TargetedMod.VANILLA;
 
 public class MixinPlugin implements IMixinConfigPlugin {
 

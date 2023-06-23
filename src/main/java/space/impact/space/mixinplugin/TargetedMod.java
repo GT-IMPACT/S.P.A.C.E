@@ -1,4 +1,4 @@
-package space.impact.space.mixins;
+package space.impact.space.mixinplugin;
 
 import com.google.common.io.Files;
 

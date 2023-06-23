@@ -23,6 +23,7 @@ val modGroup: String by extra
 
 val useMixins: String by extra
 val forceUseMixins: String by extra
+val generateMixinJson: String by extra
 
 val mixinPlugin: String by extra
 val mixinsPackage: String by extra
@@ -48,7 +49,7 @@ tasks.processResources.configure {
 }
 
 tasks.create("generateAssets") {
-    onlyIf { useMixins.toBoolean() }
+    onlyIf { generateMixinJson.toBoolean() && useMixins.toBoolean() }
     doLast {
         val mixinConfigFile = layout.projectDirectory.file("/src/main/resources/mixins.$modId.json").asFile
         if (!mixinConfigFile.exists()) {

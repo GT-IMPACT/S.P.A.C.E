@@ -1,4 +1,4 @@
-package space.impact.space.mixins;
+package space.impact.space.mixinplugin;
 
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
 
