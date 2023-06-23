@@ -7,7 +7,7 @@ def mixinSrg = "${mixinTmpDir}" + File.separator + "mixins.srg"
 tasks.register("generateAssets") {
     group = "IMPACT MIXINS"
     description = "Generates a mixin config file at /src/main/resources/mixins.modid.json if needed"
-    onlyIf { useMixins && generateMixinJson }
+    onlyIf { useMixins && generateMixinJson.toBoolean() }
     doLast {
         def mixinConfigFile = layout.projectDirectory.file("/src/main/resources/mixins." + modId + ".json").asFile
         if (!mixinConfigFile.exists()) {
