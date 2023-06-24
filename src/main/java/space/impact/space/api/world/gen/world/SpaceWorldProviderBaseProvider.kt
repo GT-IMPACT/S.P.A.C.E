@@ -3,6 +3,7 @@ package space.impact.space.api.world.gen.world
 import cpw.mods.fml.relauncher.Side
 import cpw.mods.fml.relauncher.SideOnly
 import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.util.MathHelper
 import net.minecraft.util.Vec3
@@ -15,12 +16,14 @@ import net.minecraft.world.chunk.IChunkProvider
 import net.minecraftforge.client.IRenderHandler
 import space.impact.space.api.world.atmosphere.Atmospheric
 import space.impact.space.api.world.atmosphere.AtmosphericGas
+import space.impact.space.api.world.space.ISpaceBehaviorPlayersProvider
 import space.impact.space.api.world.world_math.Vector3
 import space.impact.space.config.Config
+import space.impact.space.utils.world.WorldUtils
 import java.lang.reflect.Field
 import java.util.*
 
-abstract class SpaceWorldProviderBase : WorldProvider(), SpaceProvider {
+abstract class SpaceWorldProviderBaseProvider : WorldProvider(), SpaceProvider, ISpaceBehaviorPlayersProvider {
 
     companion object {
         var tickCounter: Field? = null
@@ -283,5 +286,13 @@ abstract class SpaceWorldProviderBase : WorldProvider(), SpaceProvider {
 
     override fun getFallDamageModifier(): Float {
         return 0.38f
+    }
+
+    override fun playerBehavior(player: EntityPlayer) {
+        if (!player.capabilities.isCreativeMode) {
+            if (!hasBreathableAtmosphere()) {
+                WorldUtils.playerBehaviorNotAtmosphere(player)
+            }
+        }
     }
 }

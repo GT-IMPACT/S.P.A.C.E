@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL11.GL_TEXTURE_2D
 import space.impact.space.MODID
-import space.impact.space.api.world.gen.world.SpaceWorldProviderBase
+import space.impact.space.api.world.gen.world.SpaceWorldProviderBaseProvider
 import space.impact.space.api.world.render.SkyProviderBase
 import space.impact.space.api.world.world_math.Vector3
 import space.impact.space.config.Config
@@ -26,7 +26,7 @@ class SkyProviderEuropa : SkyProviderBase() {
 
     override fun rendererSky(tess: Tessellator, f10: Float, partialTicks: Float) {
         var sizePlanet = f10
-        val daylength: Long = (mc.theWorld.provider as SpaceWorldProviderBase).getDayLength()
+        val daylength: Long = (mc.theWorld.provider as SpaceWorldProviderBaseProvider).getDayLength()
         GL11.glPopMatrix()
         GL11.glPushMatrix()
         sizePlanet = 5.5f

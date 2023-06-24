@@ -31,4 +31,5 @@ buildConfig {
 dependencies {
     api("space.impact:packet_network:1.1.+:dev")
     api("com.github.GTNewHorizons:NotEnoughItems:2.3.+:dev") { isChanging = true }
+    api("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
 }

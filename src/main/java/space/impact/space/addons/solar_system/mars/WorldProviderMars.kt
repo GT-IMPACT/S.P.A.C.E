@@ -6,14 +6,13 @@ import net.minecraft.util.MathHelper
 import net.minecraft.world.biome.WorldChunkManager
 import net.minecraft.world.chunk.IChunkProvider
 import net.minecraftforge.client.IRenderHandler
-import space.impact.space.addons.solar_system.jupiter.moons.europa.world.SkyProviderEuropa
 import space.impact.space.api.world.bodies.CelestialBody
-import space.impact.space.api.world.gen.world.SpaceWorldProviderBase
+import space.impact.space.api.world.gen.world.SpaceWorldProviderBaseProvider
 import space.impact.space.api.world.render.CloudRenderer
 import space.impact.space.api.world.space.Galaxies
 import space.impact.space.api.world.world_math.Vector3
 
-class WorldProviderMars : SpaceWorldProviderBase() {
+class WorldProviderMars : SpaceWorldProviderBaseProvider() {
 
     override fun getFogColor(): Vector3 {
         val f = 1.0f - getStarBrightness(1.0f)

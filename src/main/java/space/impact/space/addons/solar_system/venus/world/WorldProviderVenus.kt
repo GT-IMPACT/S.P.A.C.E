@@ -9,11 +9,11 @@ import net.minecraftforge.client.IRenderHandler
 import space.impact.space.api.world.atmosphere.ILightning
 import space.impact.space.api.world.atmosphere.PlanetFog
 import space.impact.space.api.world.bodies.CelestialBody
-import space.impact.space.api.world.gen.world.SpaceWorldProviderBase
+import space.impact.space.api.world.gen.world.SpaceWorldProviderBaseProvider
 import space.impact.space.api.world.space.Galaxies
 import space.impact.space.api.world.world_math.Vector3
 
-class WorldProviderVenus : SpaceWorldProviderBase(), ILightning, PlanetFog {
+class WorldProviderVenus : SpaceWorldProviderBaseProvider(), ILightning, PlanetFog {
 
     private var raining = false
     private var rainTime = 100

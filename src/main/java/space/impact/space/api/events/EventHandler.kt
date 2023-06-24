@@ -1,18 +1,23 @@
 package space.impact.space.api.events
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.gameevent.TickEvent
+import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
-import net.minecraft.item.Item
 import net.minecraft.util.ChunkCoordinates
+import net.minecraft.world.WorldServer
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent
 import net.minecraftforge.event.entity.living.LivingFallEvent
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.event.world.BlockEvent
 import space.impact.space.api.events.LightningStormHandler.spawnLightning
 import space.impact.space.api.world.gen.world.SpaceProvider
+import space.impact.space.api.world.space.IOrbitProvider
+import space.impact.space.api.world.space.ISpaceBehaviorPlayersProvider
 import space.impact.space.config.Config
+
 
 class EventHandler {
 
@@ -66,6 +71,21 @@ class EventHandler {
                 if (event.placedBlock == block) {
                     event.isCanceled = true
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    fun onWorldTick(event: WorldTickEvent) {
+        if (event.phase == TickEvent.Phase.START) {
+            val world = event.world as WorldServer
+            val provider = world.provider
+
+            if (provider is ISpaceBehaviorPlayersProvider) {
+                ISpaceBehaviorPlayersProvider.handleSpaceBehaviorPlayersProvider(world, provider)
+            }
+            if (provider is IOrbitProvider) {
+                IOrbitProvider.handleOrbitProvider(world, provider)
             }
         }
     }

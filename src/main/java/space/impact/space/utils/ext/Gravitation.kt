@@ -8,11 +8,12 @@ import space.impact.space.api.world.gen.world.SpaceProvider
 
 object Gravitation {
 
+    private const val DEFAULT_GRAVITY = 0.08
+
     @JvmStatic
     fun setGravityEntity(e: Entity): Double {
         val provider = e.worldObj.provider
-        if (provider is SpaceProvider) {
-
+         if (provider is SpaceProvider) {
             if (e is EntityPlayer) {
                 if (e.inventory != null) {
 
@@ -41,14 +42,14 @@ object Gravitation {
                     }
 
                     if (provider.getGravitationMultiply() > 0) {
-                        return 0.08 - provider.getGravitationMultiply() * armorModLowGrav / 100
+                        return DEFAULT_GRAVITY - provider.getGravitationMultiply() * armorModLowGrav / 100
                     }
-                    return 0.08 - provider.getGravitationMultiply() * armorModHighGrav / 100
+                    return DEFAULT_GRAVITY - provider.getGravitationMultiply() * armorModHighGrav / 100
                 }
             }
-            return 0.08 - provider.getGravitationMultiply()
+            return DEFAULT_GRAVITY - provider.getGravitationMultiply()
         }
-        return 0.08
+        return DEFAULT_GRAVITY
     }
 
 
@@ -56,7 +57,7 @@ object Gravitation {
     fun setItemGravity(e: EntityItem): Double {
         return if (e.worldObj.provider is SpaceProvider) {
             val customProvider: SpaceProvider = e.worldObj.provider as SpaceProvider
-            0.002.coerceAtLeast(0.039 - (/*if (customProvider is OrbitProvider) 0.059 else*/ customProvider.getGravitationMultiply()) / 1.75)
+            0.002.coerceAtLeast(0.039 - customProvider.getGravitationMultiply() / 1.75)
         } else {
             0.039
         }
