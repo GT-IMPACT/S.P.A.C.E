@@ -15,10 +15,10 @@ import kotlin.math.sin
 class SkyProviderEuropa : SkyProviderBase() {
 
     companion object {
-        private val jupiterTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/jupiter.png")
-        private val ioTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/io.png")
-        private val ganymedeTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/ganymede.png")
-        private val callistoTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/callisto.png")
+        private val jupiterTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/jupiter${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
+        private val ioTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/io${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
+        private val ganymedeTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/ganymede${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
+        private val callistoTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/callisto${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
     }
 
     var test = false
@@ -36,7 +36,7 @@ class SkyProviderEuropa : SkyProviderBase() {
         GL11.glRotatef(100.0f, 1.0f, 0.0f, 0.0f)
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
 
-        if (Config.isEnabledSupportCircleTexturePlanet) {
+        if (Config.isEnabledSupportHDTexturePlanet) {
             GL11.glPushAttrib(GL11.GL_ENABLE_BIT)
             GL11.glEnable(GL11.GL_BLEND)
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -50,7 +50,7 @@ class SkyProviderEuropa : SkyProviderBase() {
         tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
         tess.draw()
 
-        if (Config.isEnabledSupportCircleTexturePlanet) {
+        if (Config.isEnabledSupportHDTexturePlanet) {
             GL11.glPopAttrib()
         }
 
@@ -63,7 +63,7 @@ class SkyProviderEuropa : SkyProviderBase() {
         GL11.glRotatef(100.0f, 1.0f, 0.0f, 0.0f)
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
 
-        if (Config.isEnabledSupportCircleTexturePlanet) {
+        if (Config.isEnabledSupportHDTexturePlanet) {
             GL11.glPushAttrib(GL11.GL_ENABLE_BIT)
             GL11.glEnable(GL11.GL_BLEND)
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -77,7 +77,7 @@ class SkyProviderEuropa : SkyProviderBase() {
         tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
         tess.draw()
 
-        if (Config.isEnabledSupportCircleTexturePlanet) {
+        if (Config.isEnabledSupportHDTexturePlanet) {
             GL11.glPopAttrib()
         }
 
@@ -99,7 +99,7 @@ class SkyProviderEuropa : SkyProviderBase() {
             GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f)
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
 
-            if (Config.isEnabledSupportCircleTexturePlanet) {
+            if (Config.isEnabledSupportHDTexturePlanet) {
                 GL11.glPushAttrib(GL11.GL_ENABLE_BIT)
                 GL11.glEnable(GL11.GL_BLEND)
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -113,7 +113,7 @@ class SkyProviderEuropa : SkyProviderBase() {
             tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
             tess.draw()
 
-            if (Config.isEnabledSupportCircleTexturePlanet) {
+            if (Config.isEnabledSupportHDTexturePlanet) {
                 GL11.glPopAttrib()
             }
 
@@ -130,7 +130,7 @@ class SkyProviderEuropa : SkyProviderBase() {
         GL11.glRotatef(100.0f, 1.0f, 0.0f, 0.0f)
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
 
-        if (Config.isEnabledSupportCircleTexturePlanet) {
+        if (Config.isEnabledSupportHDTexturePlanet) {
             GL11.glPushAttrib(GL11.GL_ENABLE_BIT)
             GL11.glEnable(GL11.GL_BLEND)
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -144,7 +144,7 @@ class SkyProviderEuropa : SkyProviderBase() {
         tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
         tess.draw()
 
-        if (Config.isEnabledSupportCircleTexturePlanet) {
+        if (Config.isEnabledSupportHDTexturePlanet) {
             GL11.glPopAttrib()
         }
 
@@ -158,7 +158,7 @@ class SkyProviderEuropa : SkyProviderBase() {
             GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f)
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
 
-            if (Config.isEnabledSupportCircleTexturePlanet) {
+            if (Config.isEnabledSupportHDTexturePlanet) {
                 GL11.glPushAttrib(GL11.GL_ENABLE_BIT)
                 GL11.glEnable(GL11.GL_BLEND)
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -172,7 +172,7 @@ class SkyProviderEuropa : SkyProviderBase() {
             tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
             tess.draw()
 
-            if (Config.isEnabledSupportCircleTexturePlanet) {
+            if (Config.isEnabledSupportHDTexturePlanet) {
                 GL11.glPopAttrib()
             }
 

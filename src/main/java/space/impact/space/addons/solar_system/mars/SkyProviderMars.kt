@@ -14,6 +14,7 @@ import net.minecraftforge.client.IRenderHandler
 import org.lwjgl.opengl.GL11
 import space.impact.space.MODID
 import space.impact.space.api.world.render.SkyProviderBase.Companion.andromedaTexture
+import space.impact.space.config.Config
 import java.util.*
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -385,9 +386,9 @@ class SkyProviderMars(marsProvider : WorldProviderMars) : IRenderHandler() {
     }
 
     companion object {
-        private val overworldTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/earth.png")
-        private val phobosTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/phobos.png")
-        private val deimosTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/deimos.png")
+        private val overworldTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/earth${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
+        private val phobosTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/phobos${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
+        private val deimosTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/deimos${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
         private val sunTexture = ResourceLocation("textures/environment/sun.png")
     }
 }

@@ -12,13 +12,14 @@ import net.minecraftforge.client.IRenderHandler
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL12
 import space.impact.space.MODID
+import space.impact.space.config.Config
 import java.util.*
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class SkyProviderOrbit(private val planetToRender: ResourceLocation, private val renderMoon: Boolean, private val renderSun: Boolean) : IRenderHandler() {
+class SkyProviderOrbit(private val renderMoon: Boolean, private val renderSun: Boolean) : IRenderHandler() {
     private var starGLCallList = GLAllocation.generateDisplayLists(3)
     private var glSkyList: Int
     private var glSkyList2: Int
@@ -178,6 +179,7 @@ class SkyProviderOrbit(private val planetToRender: ResourceLocation, private val
         val celestialAngle = minecraft.theWorld.getCelestialAngle(partialTicks)
         GL11.glRotatef(celestialAngle * 360.0f, 1.0f, 0.0f, 0.0f)
         if (renderSun) {
+            GL11.glScalef(1f, 1.5f, 1f)
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
             GL11.glDisable(GL11.GL_TEXTURE_2D)
             GL11.glColor4f(0.0f, 0.0f, 0.0f, 1.0f)
@@ -192,6 +194,7 @@ class SkyProviderOrbit(private val planetToRender: ResourceLocation, private val
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
             var12 = 28.0f
+
             minecraft.renderEngine.bindTexture(sunTexture)
             var23.startDrawingQuads()
             var23.addVertexWithUV(-var12.toDouble(), 100.0, -var12.toDouble(), 0.0, 0.0)
@@ -215,46 +218,40 @@ class SkyProviderOrbit(private val planetToRender: ResourceLocation, private val
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
             var12 = 40.0f
+            GL11.glScalef(.05f, .05f, .05f)
             minecraft.renderEngine.bindTexture(moonTexture)
-            val var28 = minecraft.theWorld.moonPhase.toFloat()
-            val var30 = (var28 % 4).toInt()
-            val var29 = (var28 / 4 % 2).toInt()
-            val var16 = (var30 + 0) / 4.0f
-            val var17 = (var29 + 0) / 2.0f
-            val var18 = (var30 + 1) / 4.0f
-            val var19 = (var29 + 1) / 2.0f
             var23.startDrawingQuads()
-            var23.addVertexWithUV(-var12.toDouble(), -100.0, var12.toDouble(), var18.toDouble(), var19.toDouble())
-            var23.addVertexWithUV(var12.toDouble(), -100.0, var12.toDouble(), var16.toDouble(), var19.toDouble())
-            var23.addVertexWithUV(var12.toDouble(), -100.0, -var12.toDouble(), var16.toDouble(), var17.toDouble())
-            var23.addVertexWithUV(-var12.toDouble(), -100.0, -var12.toDouble(), var18.toDouble(), var17.toDouble())
+            var23.addVertexWithUV(-var12.toDouble(), -100.0, var12.toDouble(), 0.0, 0.0)
+            var23.addVertexWithUV(var12.toDouble(), -100.0, var12.toDouble(), 1.0, 0.0)
+            var23.addVertexWithUV(var12.toDouble(), -100.0, -var12.toDouble(), 1.0, 1.0)
+            var23.addVertexWithUV(-var12.toDouble(), -100.0, -var12.toDouble(), 0.0, 1.0)
             var23.draw()
         }
         GL11.glPopMatrix()
-        GL11.glDisable(GL11.GL_BLEND)
+
+        if (!Config.isEnabledSupportHDTexturePlanet) GL11.glDisable(GL11.GL_BLEND)
+
         GL11.glPushMatrix()
+        GL11.glRotatef(45.0f, 1.0f, 0.0f, 0.0f)
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         GL11.glTranslatef(0.0f, -var20 / 10, 0.0f)
-        var scale = 100 * (0.3f - var20 / 10000.0f)
+        var scale = 100 * (0.3f - var20 / 10000.0f) * 8
         scale = scale.coerceAtLeast(0.2f)
         GL11.glScalef(scale, 0.0f, scale)
         GL11.glTranslatef(0.0f, -var20, 0.0f)
         GL11.glRotatef(90f, 0.0f, 1.0f, 0.0f)
-        minecraft.renderEngine.bindTexture(planetToRender)
+        minecraft.renderEngine.bindTexture(earthTexture)
         var10 = 1.0f
-        val alpha = 0.5f
-        GL11.glColor4f(
-            alpha.coerceAtMost(1.0f),
-            alpha.coerceAtMost(1.0f),
-            alpha.coerceAtMost(1.0f),
-            alpha.coerceAtMost(1.0f)
-        )
         var23.startDrawingQuads()
         var23.addVertexWithUV(-var10.toDouble(), 0.0, var10.toDouble(), 0.0, 1.0)
         var23.addVertexWithUV(var10.toDouble(), 0.0, var10.toDouble(), 1.0, 1.0)
         var23.addVertexWithUV(var10.toDouble(), 0.0, -var10.toDouble(), 1.0, 0.0)
         var23.addVertexWithUV(-var10.toDouble(), 0.0, -var10.toDouble(), 0.0, 0.0)
         var23.draw()
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
         GL11.glPopMatrix()
+
+        if (Config.isEnabledSupportHDTexturePlanet) GL11.glDisable(GL11.GL_BLEND)
         GL11.glDisable(GL11.GL_TEXTURE_2D)
         GL11.glPopMatrix()
         GL11.glEnable(GL11.GL_ALPHA_TEST)
@@ -279,9 +276,9 @@ class SkyProviderOrbit(private val planetToRender: ResourceLocation, private val
                 var4 *= var12
                 var6 *= var12
                 var8 *= var12
-                val var14 = var4 * var1.nextDouble() * 50.0 + 75.0
-                val var16 = var6 * var1.nextDouble() * 50.0 + 75.0
-                val var18 = var8 * var1.nextDouble() * 50.0 + 75.0
+                val var14 = var4 * var1.nextDouble() * 1000.0 + 75.0
+                val var16 = var6 * var1.nextDouble() * 1000.0 + 75.0
+                val var18 = var8 * var1.nextDouble() * 1000.0 + 75.0
                 val var20 = atan2(var4, var8)
                 val var22 = sin(var20)
                 val var24 = cos(var20)
@@ -309,7 +306,17 @@ class SkyProviderOrbit(private val planetToRender: ResourceLocation, private val
     }
 
     companion object {
-        private val moonTexture = ResourceLocation("textures/environment/moon_phases.png")
-        private val sunTexture = ResourceLocation(MODID, "textures/gui/sol/orbit/orbitalsun.png")
+        private val moonTexture = ResourceLocation(
+            MODID,
+            "textures/gui/sol/orbit/moon${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png"
+        )
+        private val sunTexture = ResourceLocation(
+            MODID,
+            "textures/gui/sol/orbit/orbitalsun${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png"
+        )
+        private val earthTexture = ResourceLocation(
+            MODID,
+            "textures/gui/sol/earth${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png"
+        )
     }
 }

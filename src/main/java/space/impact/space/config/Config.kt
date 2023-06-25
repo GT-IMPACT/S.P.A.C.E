@@ -30,7 +30,7 @@ object Config {
             blocksDisabledPlaceWorld += listOf(Blocks.torch, Blocks.bed, Blocks.fire,)
 
             //CLIENT
-            isEnabledSupportCircleTexturePlanet = cfg[CATEGORY_CLIENT, "isEnabledSupportCircleTexturePlanet", false].boolean
+            isEnabledSupportHDTexturePlanet = cfg[CATEGORY_CLIENT, "isEnabledSupportHDTexturePlanet", false].boolean
 
             //OTHER
 
@@ -38,6 +38,6 @@ object Config {
     }
 
     var isEnabledForceRespawn: Boolean = false
-    var isEnabledSupportCircleTexturePlanet: Boolean = false
+    var isEnabledSupportHDTexturePlanet: Boolean = false
     val blocksDisabledPlaceWorld: ArrayList<Block> = ArrayList()
 }

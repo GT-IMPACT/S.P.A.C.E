@@ -10,6 +10,7 @@ import space.impact.space.api.world.world_math.Vector3
 import space.impact.space.config.Config
 
 class SkyProviderMoon : SkyProviderBase() {
+
     override fun rendererSky(tess: Tessellator, f10: Float, partialTicks: Float) {
         GL11.glPopMatrix()
         GL11.glPushMatrix()
@@ -19,7 +20,7 @@ class SkyProviderMoon : SkyProviderBase() {
         GL11.glRotatef(earthRotation, 1.0f, 0.0f, 0.0f)
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
 
-        if (Config.isEnabledSupportCircleTexturePlanet) {
+        if (Config.isEnabledSupportHDTexturePlanet) {
             GL11.glPushAttrib(GL11.GL_ENABLE_BIT)
             GL11.glEnable(GL11.GL_BLEND)
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -29,13 +30,13 @@ class SkyProviderMoon : SkyProviderBase() {
 
         val sizePlanet = 40.0f
         tess.startDrawingQuads()
-        tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, sizePlanet.toDouble(), 0.0, 0.75)
-        tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, sizePlanet.toDouble(), 0.75, 0.75)
-        tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, (-sizePlanet).toDouble(), 0.75, 0.0)
+        tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, sizePlanet.toDouble(), 0.0, 1.0)
+        tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, sizePlanet.toDouble(), 1.0, 1.0)
+        tess.addVertexWithUV(sizePlanet.toDouble(), -100.0, (-sizePlanet).toDouble(), 1.0, 0.0)
         tess.addVertexWithUV((-sizePlanet).toDouble(), -100.0, (-sizePlanet).toDouble(), 0.0, 0.0)
         tess.draw()
 
-        if (Config.isEnabledSupportCircleTexturePlanet) {
+        if (Config.isEnabledSupportHDTexturePlanet) {
             GL11.glPopAttrib()
         } else {
             val f = 0.59f
@@ -76,6 +77,10 @@ class SkyProviderMoon : SkyProviderBase() {
     }
 
     companion object {
-        private val earthTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/earth.png")
+        private val earthTexture: ResourceLocation = ResourceLocation(
+            MODID,
+            "textures/gui/sol/earth${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png"
+        )
+
     }
 }

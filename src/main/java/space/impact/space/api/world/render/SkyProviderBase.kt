@@ -191,7 +191,7 @@ abstract class SkyProviderBase : IRenderHandler() {
             GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f)
             GL11.glRotatef(-360.0f, 1.0f, 0.0f, 0.0f)
 
-            if (Config.isEnabledSupportCircleTexturePlanet) {
+            if (Config.isEnabledSupportHDTexturePlanet) {
                 GL11.glPushAttrib(GL11.GL_ENABLE_BIT)
                 GL11.glEnable(GL11.GL_BLEND)
                 GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
@@ -210,7 +210,7 @@ abstract class SkyProviderBase : IRenderHandler() {
             tessellator1.addVertexWithUV((-f10).toDouble(), -100.0, (-f10).toDouble(), 0.0, 0.0)
             tessellator1.draw()
 
-            if (Config.isEnabledSupportCircleTexturePlanet) {
+            if (Config.isEnabledSupportHDTexturePlanet) {
                 GL11.glPopAttrib()
             } else {
                 renderAtmo(tessellator1, -360.0f, 0.0f, f10 - 5.0f, getAtmosphereColor())
@@ -269,7 +269,7 @@ abstract class SkyProviderBase : IRenderHandler() {
     }
 
     protected fun renderAtmo(tessellator1: Tessellator, x: Float, y: Float, f10: Float, vec: Vector3?) {
-        if (vec != null && !Config.isEnabledSupportCircleTexturePlanet) {
+        if (vec != null && !Config.isEnabledSupportHDTexturePlanet) {
             GL11.glEnable(GL_BLEND)
             GL11.glDisable(GL_TEXTURE_2D)
             GL11.glBlendFunc(770, 771)
@@ -482,7 +482,7 @@ abstract class SkyProviderBase : IRenderHandler() {
     }
 
     init {
-        planetToRender = ResourceLocation(MODID, "textures/gui/celestialbodies/earth.png")
+        planetToRender = ResourceLocation(MODID, "textures/gui/sol/earth${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
         afloat = FloatArray(4)
         mc = Minecraft.getMinecraft()
         val displayLists = GLAllocation.generateDisplayLists(3)

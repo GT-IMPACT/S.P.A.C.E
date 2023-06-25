@@ -67,7 +67,6 @@ class WorldProviderEarthOrbit : SpaceWorldProviderBaseProvider(), IOrbitProvider
     override fun getSkyRenderer(): IRenderHandler {
         if (super.getSkyRenderer() == null) {
             skyRenderer = SkyProviderOrbit(
-                planetToRender = ResourceLocation(MODID, "textures/gui/sol/earth.png"),
                 renderMoon = true,
                 renderSun = true,
             )
