@@ -71,11 +71,11 @@ abstract class SpaceWorldChunkManagerBase : WorldChunkManager() {
         }
     }
 
-    override fun areBiomesViable(par1: Int, par2: Int, par3: Int, par4List: List<*>): Boolean {
+    override fun areBiomesViable(par1: Int, par2: Int, par3: Int, par4List: List<BiomeGenBase>): Boolean {
         return par4List.contains(this.getBiome())
     }
 
-    override fun findBiomePosition(par1: Int, par2: Int, par3: Int, par4List: List<*>?, par5Random: Random?): ChunkPosition? {
+    override fun findBiomePosition(par1: Int, par2: Int, par3: Int, par4List: List<BiomeGenBase>?, par5Random: Random?): ChunkPosition? {
         val var6 = par1 - par3 shr 2
         val var7 = par2 - par3 shr 2
         val var8 = par1 + par3 shr 2

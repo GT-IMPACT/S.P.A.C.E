@@ -526,7 +526,7 @@ abstract class ChunkProviderSpaceLakes(
         return "RandomLevelSource"
     }
 
-    override fun getPossibleCreatures(type: EnumCreatureType?, x: Int, y: Int, z: Int): MutableList<Any?>? {
+    override fun getPossibleCreatures(type: EnumCreatureType?, x: Int, y: Int, z: Int): MutableList<SpawnListEntry>? {
         return null
     }
 

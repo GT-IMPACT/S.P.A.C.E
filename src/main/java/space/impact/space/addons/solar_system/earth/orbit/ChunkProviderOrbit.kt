@@ -6,6 +6,7 @@ import net.minecraft.entity.EnumCreatureType
 import net.minecraft.init.Blocks
 import net.minecraft.util.IProgressUpdate
 import net.minecraft.world.World
+import net.minecraft.world.biome.BiomeGenBase
 import net.minecraft.world.chunk.Chunk
 import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.ChunkProviderGenerate
@@ -64,7 +65,7 @@ class ChunkProviderOrbit(private val worldObj: World, par2: Long, par4: Boolean)
         return "OrbitLevelSource"
     }
 
-    override fun getPossibleCreatures(par1EnumCreatureType: EnumCreatureType, i: Int, j: Int, k: Int): List<*>? {
+    override fun getPossibleCreatures(par1EnumCreatureType: EnumCreatureType, i: Int, j: Int, k: Int): MutableList<BiomeGenBase.SpawnListEntry>? {
         return null
     }
 }

@@ -156,7 +156,7 @@ open class ChunkProviderBase(
         return this.decorator
     }
 
-    override fun getPossibleCreatures(par1EnumCreatureType: EnumCreatureType?, x: Int, y: Int, z: Int): List<*>? {
+    override fun getPossibleCreatures(par1EnumCreatureType: EnumCreatureType?, x: Int, y: Int, z: Int): MutableList<BiomeGenBase.SpawnListEntry>? {
         /*val biome = getBiomeAt(this, x.toLong(), z.toLong())
         if (biome != null) {
             return biome.getSpawnableList(par1EnumCreatureType)

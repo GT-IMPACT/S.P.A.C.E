@@ -1,35 +1,28 @@
-
 plugins {
     alias(libs.plugins.buildconfig)
-    groovy
     id("minecraft")
-    id("publish")
 }
 
 repositories {
     maven("https://maven.accident.space/repository/maven-public/")
-    maven("http://jenkins.usrv.eu:8081/nexus/content/groups/public/") { isAllowInsecureProtocol = true }
-    maven("https://jitpack.io")
-    maven("https://maven.ic2.player.to/") { metadataSources { mavenPom(); artifact() } }
+    maven("https://nexus.gtnewhorizons.com/repository/public/")
     mavenCentral()
+    maven("https://jitpack.io")
+    maven("https://cursemaven.com")
     mavenLocal()
 }
 
-val modId: String by extra
-val modName: String by extra
-val modGroup: String by extra
-
-buildConfig {
-    packageName("space.impact.$modId")
-    buildConfigField("String", "MODID", "\"${modId}\"")
-    buildConfigField("String", "MODNAME", "\"${modName}\"")
-    buildConfigField("String", "VERSION", "\"${project.version}\"")
-    buildConfigField("String", "GROUPNAME", "\"${modGroup}\"")
-    useKotlinOutput { topLevelConstants = true }
+dependencies {
+    api("space.impact:forgelin:2.0.+") { isChanging = true }
+    api("space.impact:packet_network:1.1.3:dev")
+    api("com.github.GTNewHorizons:NotEnoughItems:2.4.13-GTNH:dev")
+//    api("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
+    api("curse.maven:ic2-242638:2353971")
+    runtimeOnlyNonPublishable("curse.maven:journeymap-32274:4500659")
 }
 
-dependencies {
-    api("space.impact:packet_network:1.1.+:dev")
-    api("com.github.GTNewHorizons:NotEnoughItems:2.3.+:dev") { isChanging = true }
-    api("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
+val modId: String by extra
+
+tasks.runClient.configure {
+    extraArgs.addAll("--mixin", "mixins.$modId.json")
 }

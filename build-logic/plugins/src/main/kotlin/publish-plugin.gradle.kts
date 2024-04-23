@@ -16,6 +16,7 @@ plugins {
 val modId: String by extra
 val modName: String by extra
 val modGroup: String by extra
+val modFile: String? by extra
 val versionDetails: Closure<VersionDetails> by extra
 val gitDetails = versionDetails()
 group = modGroup
@@ -37,12 +38,12 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-archivesName.set(modId)
+archivesName.set(modFile ?: modId)
 
-tasks.withType<GenerateModuleMetadata> {
-    enabled = false
-    mustRunAfter("reobf")
-}
+//tasks.withType<GenerateModuleMetadata> {
+//    enabled = false
+//    mustRunAfter("reobfJar")
+//}
 
 configure<PublishingExtension> {
     publications {
@@ -51,8 +52,6 @@ configure<PublishingExtension> {
             pom.withXml {
                 removeRuntimeDependencies(asNode())
             }
-
-            artifact(tasks["devJar"])
             groupId = "space.impact"
             artifactId = modId
             version = identifiedVersion
@@ -69,21 +68,18 @@ configure<PublishingExtension> {
     }
 }
 
-
 //hack https://youtrack.jetbrains.com/issue/KT-28355
 fun removeRuntimeDependencies(pomNode: Node) {
     val dependencyNodes: NodeList = pomNode.get("dependencies") as NodeList
     val dependencies = dependencyNodes.lastOrNull() as? Node
     val removeCandidate = arrayListOf<Node>()
-    val removeExc = arrayListOf<Node>()
     dependencies?.children()?.forEach { dependency ->
         (dependency as? Node)?.children()
             ?.mapNotNull { it as? Node }
-            ?.onEach { if (it.toString().contains("exclusions")) removeExc += it }
             ?.filter { (it.value() as? NodeList)?.lastOrNull() == "runtime" || it.value() == "org.jetbrains.kotlin" }
             ?.forEach { removeCandidate += it.parent() }
     }
-    removeCandidate.forEach { it.parent().remove(it) }
-    removeExc.forEach { it.parent().remove(it) }
+    removeCandidate.forEach {
+        it.parent().remove(it)
+    }
 }
-

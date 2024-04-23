@@ -46,7 +46,7 @@ open class BasicBlock(
     }
 
     @SideOnly(Side.CLIENT)
-    override fun getSubBlocks(block: Item, creativeTabs: CreativeTabs?, list: MutableList<in ItemStack>) {
+    override fun getSubBlocks(block: Item, creativeTabs: CreativeTabs?, list: MutableList<ItemStack>) {
         for (i in blocks.indices) {
             list.add(ItemStack(block, 1, i))
         }
