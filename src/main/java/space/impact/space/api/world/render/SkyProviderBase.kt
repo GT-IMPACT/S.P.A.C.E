@@ -391,49 +391,52 @@ abstract class SkyProviderBase : IRenderHandler() {
         GL11.glDisable(3042)
     }
 
-    private fun renderStars() {
-        val rand = Random(10842L)
-        val var2 = Tessellator.instance
-        var2.startDrawingQuads()
-        var starIndex = 0
-        while (starIndex < 6000) {
-            var var4 = (rand.nextFloat() * 2.0f - 1.0f).toDouble()
-            var var6 = (rand.nextFloat() * 2.0f - 1.0f).toDouble()
-            var var8 = (rand.nextFloat() * 2.0f - 1.0f).toDouble()
-            val var10 = (0.15f + rand.nextFloat() * 0.1f).toDouble()
-            var var12 = var4 * var4 + var6 * var6 + var8 * var8
-            if (var12 < 1.0 && var12 > 0.01) {
-                var12 = 1.0 / sqrt(var12)
-                var4 *= var12
-                var6 *= var12
-                var8 *= var12
-                val var14 = var4 * rand.nextDouble() * 150.0 + 130.0
-                val var16 = var6 * rand.nextDouble() * 150.0 + 130.0
-                val var18 = var8 * rand.nextDouble() * 150.0 + 130.0
-                val var20 = atan2(var4, var8)
-                val var22 = sin(var20)
-                val var24 = cos(var20)
-                val var26 = atan2(sqrt(var4 * var4 + var8 * var8), var6)
-                val var28 = sin(var26)
-                val var30 = cos(var26)
-                val var32 = rand.nextDouble() * Math.PI * 2.0
-                val var34 = sin(var32)
-                val var36 = cos(var32)
-                for (var38 in 0..3) {
-                    val var41 = ((var38 and 2) - 1).toDouble() * var10
-                    val var43 = ((var38 + 1 and 2) - 1).toDouble() * var10
-                    val var47 = var41 * var36 - var43 * var34
-                    val var49 = var43 * var36 + var41 * var34
-                    val var53 = var47 * var28 + 0.0 * var30
-                    val var55 = 0.0 * var28 - var47 * var30
-                    val var57 = var55 * var22 - var49 * var24
-                    val var61 = var49 * var22 + var55 * var24
-                    var2.addVertex(var14 + var57, var16 + var53, var18 + var61)
-                }
-            }
-            ++starIndex
+    protected fun renderStars(partialTicks: Float) {
+        val screenWidth = Minecraft.getMinecraft().displayWidth
+        val screenHeight = Minecraft.getMinecraft().displayHeight
+        val rand = Random(0x123456789)
+        val mc = Minecraft.getMinecraft()
+        val world = mc.theWorld
+        val celestialAngle = world.getCelestialAngle(partialTicks)
+
+        GL11.glDisable(GL_TEXTURE_2D)
+        GL11.glDisable(GL11.GL_DEPTH_TEST)
+        GL11.glDepthMask(false)
+        GL11.glEnable(GL11.GL_BLEND)
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
+
+        GL11.glPushMatrix()
+        GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f)
+        GL11.glRotatef(MathHelper.sin(celestialAngle * Math.PI.toFloat()) * 180.0f, 0.0f, 0.0f, 1.0f)
+        val tessellator = Tessellator.instance
+        tessellator.startDrawing(GL11.GL_POINTS)
+        for (i in 0..4999) { // Можете изменить количество звезд по вашему вкусу
+            val brightness = rand.nextFloat() * 0.2f + 0.1f // Случайная яркость
+            val size = rand.nextFloat() * 2.0f + 1.0f // Случайный размер
+            val color = getRandomStarColor(rand) // Случайный цвет
+
+            val scaleFactor = (screenWidth * screenHeight).toFloat() / (1920 * 1080).toFloat() // Коэффициент масштабирования
+            val starSize: Float = 1f + (1.5f - 1f) * scaleFactor // Рассчитываем размер звезды
+            GL11.glPointSize(starSize)
+            tessellator.setColorRGBA_I(color, (brightness * 255.0f).toInt()) // Устанавливаем цвет и яркость
+            val x = rand.nextGaussian() * 50 * size // Умножаем координаты на размер звезды
+            val y = rand.nextGaussian() * 50 * size
+            val z = rand.nextGaussian() * 50 * size
+            tessellator.addVertex(x, y, z) // Рисуем звезду
         }
-        var2.draw()
+        tessellator.draw()
+        GL11.glPopMatrix()
+
+        GL11.glDepthMask(true)
+        GL11.glEnable(GL11.GL_DEPTH_TEST)
+        GL11.glEnable(GL_TEXTURE_2D)
+        GL11.glDisable(GL11.GL_BLEND)
+    }
+
+    private fun getRandomStarColor(random: Random): Int {
+        val colors = intArrayOf(0xFFFFFF, 0xFFFFCC, 0xFFFF99, 0xFFFF66, 0xFFFF33) // Можете изменить список цветов
+        return colors[random.nextInt(colors.size)]
     }
 
     private fun getCustomSkyColor(): Vec3 {
@@ -451,6 +454,8 @@ abstract class SkyProviderBase : IRenderHandler() {
         }
         return var3 * var3 * 1.0f
     }
+
+
 
     protected abstract fun rendererSky(tess: Tessellator, f10: Float, partialTicks: Float)
     protected abstract fun modeLight(): Int
@@ -492,7 +497,7 @@ abstract class SkyProviderBase : IRenderHandler() {
         GL11.glPushMatrix()
         GL11.glNewList(starList, 4864)
         if (enableStar()) {
-            renderStars()
+            renderStars(partialTicks = 0f)
         }
         GL11.glEndList()
         GL11.glPopMatrix()
@@ -551,5 +556,24 @@ abstract class SkyProviderBase : IRenderHandler() {
             tess.addVertexWithUV(xMax, yMax, zMax, uMax, vMax)
             tess.addVertexWithUV(xMax, yMax, zMin, uMax, vMin)
         }
+
+        inline fun renderPlanet(onRender: () -> Unit) {
+            GL11.glDisable(GL11.GL_DEPTH_TEST)
+            GL11.glDepthMask(false)
+            GL11.glEnable(GL11.GL_BLEND)
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+            GL11.glPushMatrix()
+
+            onRender()
+
+            GL11.glPopMatrix()
+
+            GL11.glDepthMask(true);
+            GL11.glEnable(GL11.GL_DEPTH_TEST)
+            GL11.glDisable(GL11.GL_BLEND)
+        }
+
+
     }
 }
