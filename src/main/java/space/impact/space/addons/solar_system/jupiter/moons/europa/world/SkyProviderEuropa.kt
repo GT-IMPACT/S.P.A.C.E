@@ -1,33 +1,31 @@
 package space.impact.space.addons.solar_system.jupiter.moons.europa.world
 
 import cpw.mods.fml.client.FMLClientHandler
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
-import net.minecraft.util.MathHelper
-import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL11.GL_TEXTURE_2D
-import space.impact.space.MODID
 import space.impact.space.api.world.gen.world.SpaceWorldProviderBaseProvider
 import space.impact.space.api.world.render.SkyProviderBase
-import space.impact.space.api.world.world_math.Vector3
-import space.impact.space.config.Config
-import java.util.*
+import space.impact.space.api.world.render.SkyRenderManager.callistoTexture
+import space.impact.space.api.world.render.SkyRenderManager.ganymedeTexture
+import space.impact.space.api.world.render.SkyRenderManager.ioTexture
+import space.impact.space.api.world.render.SkyRenderManager.jupiterTexture
+import space.impact.space.api.world.render.SkyRenderManager.renderPlanet
 import kotlin.math.sin
-
 
 class SkyProviderEuropa : SkyProviderBase() {
 
-    companion object {
-        private val jupiterTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/jupiter${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
-        private val ioTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/io${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
-        private val ganymedeTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/ganymede${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
-        private val callistoTexture: ResourceLocation = ResourceLocation(MODID, "textures/gui/sol/moons/callisto${if (Config.isEnabledSupportHDTexturePlanet) "_hd" else ""}.png")
-    }
-
-    var isIoFirst = false
-
+    private var isIoFirst = false
     private val dayLength: Long = (mc.theWorld.provider as? SpaceWorldProviderBaseProvider)?.getDayLength() ?: 1
+
+    override fun doRenderCustom(tess: Tessellator, partialTicks: Float) {
+        GL11.glPushMatrix()
+        renderGanymede(tess)
+        renderCallisto(tess)
+        if (!isIoFirst) renderJupiter(tess)
+        renderIo(tess, partialTicks)
+        if (isIoFirst) renderJupiter(tess)
+        GL11.glPopMatrix()
+    }
 
     private fun renderJupiter(tess: Tessellator) = renderPlanet {
         val sizePlanet = 135.0f
@@ -47,12 +45,6 @@ class SkyProviderEuropa : SkyProviderBase() {
         tess.draw()
 
         GL11.glDisable(GL11.GL_ALPHA_TEST)
-
-        val atmosphereScale = 0.9f
-        renderAtmo(
-            tess, 0.0f, 0.0f, sizePlanet * 5f,
-            Vector3((0.47058824f * atmosphereScale).toDouble(), (0.43137255f * atmosphereScale).toDouble(), (0.47058824f * atmosphereScale).toDouble())
-        )
     }
 
     private fun renderGanymede(tess: Tessellator) = renderPlanet {
@@ -117,48 +109,5 @@ class SkyProviderEuropa : SkyProviderBase() {
         tess.draw()
 
         GL11.glDisable(GL11.GL_ALPHA_TEST)
-    }
-
-
-    override fun rendererSky(tess: Tessellator, f10: Float, partialTicks: Float) {
-        GL11.glPushMatrix()
-        renderGanymede(tess)
-        renderCallisto(tess)
-        if (!this.isIoFirst) renderJupiter(tess)
-        renderIo(tess, partialTicks)
-        if (this.isIoFirst) renderJupiter(tess)
-        GL11.glPopMatrix()
-    }
-
-    override fun enableBaseImages(): Boolean {
-        return true
-    }
-
-    override fun sunSize(): Float {
-        return 5.0f
-    }
-
-    override fun enableStar(): Boolean {
-        return true
-    }
-
-    override fun sunImage(): ResourceLocation {
-        return ResourceLocation(MODID, "textures/gui/sun_blank.png")
-    }
-
-    override fun modeLight(): Int {
-        return 0
-    }
-
-    override fun colorSunAura(): Vector3 {
-        return Vector3(150.0, 150.0, 150.0)
-    }
-
-    override fun getAtmosphereColor(): Vector3? {
-        return null
-    }
-
-    override fun enableSmoothRender(): Boolean {
-        return true
     }
 }

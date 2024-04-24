@@ -13,7 +13,7 @@ import net.minecraft.util.Vec3
 import net.minecraftforge.client.IRenderHandler
 import org.lwjgl.opengl.GL11
 import space.impact.space.MODID
-import space.impact.space.api.world.render.SkyProviderBase.Companion.andromedaTexture
+import space.impact.space.api.world.render.SkyRenderManager.andromedaTexture
 import space.impact.space.config.Config
 import java.util.*
 import kotlin.math.atan2

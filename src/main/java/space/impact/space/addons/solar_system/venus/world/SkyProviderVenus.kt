@@ -7,34 +7,38 @@ import space.impact.space.api.world.world_math.Vector3
 
 class SkyProviderVenus : SkyProviderBase() {
 
-    override fun rendererSky(tess: Tessellator, f10: Float, partialTicks: Float) {}
+    override fun doRenderCustom(tess: Tessellator, partialTicks: Float) {
 
-    override fun enableBaseImages(): Boolean {
-        return false
     }
 
-    override fun sunSize(): Float {
-        return 25.5f
-    }
-
-    override fun enableStar(): Boolean {
-        return false
-    }
-
-    override fun sunImage(): ResourceLocation? {
-        return null
-    }
-
-    override fun modeLight(): Int {
-        return 2
-    }
-
-    override fun colorSunAura(): Vector3? {
-        return null
-    }
-
-    override fun getAtmosphereColor(): Vector3 {
-        val f = 0.5f
-        return Vector3((0.35686275f * f).toDouble(), (0.23921569f * f).toDouble(), (0.03137255f * f).toDouble())
-    }
+//    override fun rendererSky(tess: Tessellator, f10: Float, partialTicks: Float) {}
+//
+//    override fun enableBaseImages(): Boolean {
+//        return false
+//    }
+//
+//    override fun sunSize(): Float {
+//        return 25.5f
+//    }
+//
+//    override fun enableStar(): Boolean {
+//        return false
+//    }
+//
+//    override fun sunImage(): ResourceLocation? {
+//        return null
+//    }
+//
+//    override fun modeLight(): Int {
+//        return 2
+//    }
+//
+//    override fun colorSunAura(): Vector3? {
+//        return null
+//    }
+//
+//    override fun getAtmosphereColor(): Vector3 {
+//        val f = 0.5f
+//        return Vector3((0.35686275f * f).toDouble(), (0.23921569f * f).toDouble(), (0.03137255f * f).toDouble())
+//    }
 }
